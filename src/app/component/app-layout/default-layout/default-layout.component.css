@@ -1,0 +1,48 @@
+.layout-container {
+  display: flex;
+
+  
+}
+
+.left-sidebar {
+  width: 25%; /* Left sidebar takes 25% of the width */
+
+}
+
+.center-content {
+  width: 50%; /* Center content takes 50% of the width */
+  padding: 10px; /* Padding for aesthetics */
+}
+
+.right-sidebar {
+  width: 25%; /* Right sidebar takes 25% of the width */
+  background-color: #f4f4f4; /* Background color for right sidebar */
+  padding: 10px; /* Padding for aesthetics */
+}
+
+/* Additional styles for your body */
+.body {
+  display: flex; /* Ensure body is also flexible */
+  flex-direction: column; /* Arrange children in a column */
+  height: 100vh; /* Full height */
+  margin-left: 15rem; /* Adjust for the width of the sidebar */
+  z-index: 0;
+  position: relative;
+  top: 0;
+  transition: all 0.5s ease;
+  background: white;
+}
+
+.body-trimmed {
+  margin-left: 20rem; /* Adjust for trimmed state */
+}
+
+.body-md-screen {
+  width: 86%; /* Responsive adjustment for medium screens */
+  margin-left: 14rem; /* Adjust for width */
+}
+
+.default {
+  width: 100%; /* Default full width */
+  margin: 0; /* No margins */
+}

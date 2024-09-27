@@ -1,0 +1,81 @@
+<div class="header_container">
+
+    <div class="app_img">
+        <img src="assets/images/clientzzz.png" alt="Logo" />
+    </div>
+    <div class="center_heading">
+        <h1 class="heading">ADULT EDUCATION & LITERACY</h1>
+    </div>
+    <div>
+        <mat-icon mat-button [matMenuTriggerFor]="profileMenu">menu</mat-icon>
+    </div>
+
+    <!-- Profile Menu -->
+    <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item style="text-align: center">
+            <span style="margin-right: 10px; font-size: larger; color: #666666">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </span>
+            Logout
+        </button>
+    </mat-menu>
+
+    <!-- Screen Menu -->
+    <mat-menu #screenMenu="matMenu">
+        <button mat-menu-item>
+            <span class="center-icon">
+                <svg class="sidenav-icon" width="22" height="22">
+                    <image x="0" y="0" width="100%" height="100%" [attr.href]="'assets/svgs/config.svg'"
+                        alt="Organisation Icon" />
+                </svg>
+                <span class="sidenav-text">Organization</span>
+            </span>
+        </button>
+
+        <button mat-menu-item>
+            <span class="center-icon">
+                <svg class="sidenav-icon" width="22" height="22">
+                    <image x="0" y="0" width="100%" height="100%" [attr.href]="'assets/svgs/config.svg'"
+                        alt="Organisation Icon" />
+                </svg>
+                <span class="sidenav-text">Default Model Config</span>
+            </span>
+        </button>
+        <button mat-menu-item>
+            <span class="center-icon">
+                <svg class="sidenav-icon" width="22" height="22">
+                    <image x="0" y="0" width="100%" height="100%" [attr.href]="'assets/svgs/edit.svg'"
+                        alt="Organisation Icon" />
+                </svg>
+                <span class="sidenav-text">Default Data Set</span>
+            </span>
+        </button>
+    </mat-menu>
+
+    <ng-template #confirmationDialog>
+        <div style="text-align-last: end">
+            <mat-icon>close</mat-icon>
+        </div>
+        <div style="text-align: center; width: 100%; margin-top: 30px;">
+            <h6 style="text-align: center; font-weight: bold; font-size: initial; margin-bottom: 20px;">
+                Are you sure want to sign out?
+            </h6>
+            <button style="margin: 5px" mat-button class="c" mat-raised-button>
+                Cancel
+            </button>
+            <button style="margin: 5px" mat-raised-button color="warn">
+                OK
+            </button>
+        </div>
+    </ng-template>
+</div>
+
+
+<!-- <div class="page-sidebar">
+    <app-side-navbar></app-side-navbar>
+    <div class="body page-style" style="position: relative;">
+        <router-outlet></router-outlet>
+        <div class="page-footer">
+        </div>
+    </div>
+</div> -->

@@ -1,0 +1,79 @@
+[
+	{
+	  "label": "What is your full name?",
+	  "type": "input",
+	  "fields": [
+		{ "name": "firstName", "placeholder": "First Name", "required": true },
+		{ "name": "middleName", "placeholder": "Middle Name", "required": false },
+		{ "name": "lastName", "placeholder": "Last Name", "required": true }
+	  ]
+	},
+	{
+	  "label": "Could you please select your date of birth?",
+	  "type": "datepicker",
+	  "name": "date_of_birth"
+	},
+	{
+	  "label": "Could you please select your gender?",
+	  "type": "radio",
+	  "options": ["Male", "Female", "I prefer not to disclose"],
+	  "name": "gender"
+	},
+	{
+	  "label": "Could you please select your ethnicity?",
+	  "type": "radio",
+	  "options": ["Hispanic/Latino", "Not Hispanic/Latino"],
+	  "name": "ethnicity"
+	},
+	{
+	  "label": "Could you please indicate your race by checking all that apply?",
+	  "type": "checkbox",
+	  "options": [
+		"American Indian or Alaskan Native",
+		"Native Hawaiian or Other Pacific Islander",
+		"Asian",
+		"White",
+		"Black/African American"
+	  ],
+	  "name": "languages"
+	},
+	{
+	  "label": "Could you please provide your mailing address?",
+	  "type": "input",
+	  "fields": [
+		{ "name": "street_address", "placeholder": "Street address", "required": true },
+		{ "name": "city", "placeholder": "City", "required": true },
+		{ "name": "state", "placeholder": "State", "required": false },
+		{ "name": "zip", "placeholder": "Zip", "required": true }
+	  ]
+	},
+	{
+	  "label": "Could you please provide your email address?",
+	  "type": "input",
+	  "fields": [
+		{ "name": "email", "placeholder": "", "required": true }
+	  ]
+	},
+	{
+	  "label": "Could you please provide your phone number?",
+	  "type": "input",
+	  "fields": [
+		{ "name": "phone_number", "placeholder": "", "required": true }
+	  ]
+	},
+	{
+	  "label": "Could you please provide your home phone number?",
+	  "type": "input",
+	  "fields": [
+		{ "name": "home_phone", "placeholder": "", "required": true }
+	  ]
+	},
+	{
+	  "label": "Could you please provide your work phone number (optional)?",
+	  "type": "input",
+	  "fields": [
+		{ "name": "work_phone", "placeholder": "", "required": false }
+	  ]
+	}
+  ]
+  
