@@ -61,6 +61,22 @@ export class DynamicQuestionComponent implements OnInit {
       (res: any) => {
 
         this.questions = res;
+        this.questions.forEach((res: any) => {
+          if (res.type == "checkbox") {
+            this.options.addControl(res.name, this.formBuilder.array([]))
+            const formarray = this.options.get(res.name) as FormArray
+            res.options.forEach((element: any) => {
+              formarray.push(new FormControl())
+            });
+          } else if (res.type == "input") {
+            res.fields.forEach((element: any) => {
+              this.options.addControl(element.name, new FormControl())
+            });
+          } else {
+            this.options.addControl(res.name, new FormControl())
+          }
+        })
+        this.options.reset();
       },
       (error: any) => {
         console.error('Error fetching data:', error);
@@ -76,22 +92,9 @@ export class DynamicQuestionComponent implements OnInit {
       console.log(res);
 
     })
-
-    this.questions.forEach((res: any) => {
-      if (res.type == "checkbox") {
-        this.options.addControl(res.name, this.formBuilder.array([]))
-        const formarray = this.options.get(res.name) as FormArray
-        res.options.forEach((element: any) => {
-          formarray.push(new FormControl())
-        });
-      } else if (res.type == "input") {
-        res.fields.forEach((element: any) => {
-          this.options.addControl(element.name, new FormControl())
-        });
-      } else {
-        this.options.addControl(res.name, new FormControl())
-      }
-    })
+    console.warn("kkkkkkkkkkkkkkkkkkk",this.questions);
+    
+   
     this.loadInit("personal")
 
   }
