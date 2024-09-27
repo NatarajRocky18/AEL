@@ -1,0 +1,13 @@
+[
+    {
+		"label": "Are you a veteran ?",
+		"type": "radio",
+		"options": [
+			"No",
+			"Yes",
+			"I’m not, but my spouse is/was"
+		],
+		"name": "hello"
+	}
+
+]

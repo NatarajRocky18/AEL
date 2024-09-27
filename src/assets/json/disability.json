@@ -1,54 +1,36 @@
 [
- 
 	{
-	  "label": "Could you please indicate your race by checking all that apply?",
-	  "type": "checkbox",
-	  "options": [
-		"American Indian or Alaskan Native",
-		"Native Hawaiian or Other Pacific Islander",
-		"Asian",
-		"White",
-		"Black/African American"
-	  ],
-	  "name": "languages"
+		"label": "Do you have a physical or mental disability as defined by the Americans with Disabilities Act (ADA), that substantially limits one or more major life activities?",
+		"type": "radio",
+		"options": [
+			"No",
+			"Yes",
+			"I prefer not to disclose"
+		],
+		"name": "disability"
 	},
 	{
-	  "label": "Could you please provide your mailing address?",
-	  "type": "input",
-	  "fields": [
-		{ "name": "street_address", "placeholder": "Street address", "required": true },
-		{ "name": "city", "placeholder": "City", "required": true },
-		{ "name": "state", "placeholder": "State", "required": false },
-		{ "name": "zip", "placeholder": "Zip", "required": true }
-	  ]
+		"label": "Would you like to provide further details about your disability or its impact on your participation?",
+		"type": "radio",
+		"options": [
+			"No",
+			"Yes"
+		],
+		"name": "disability_impact"
 	},
 	{
-	  "label": "Could you please provide your email address?",
-	  "type": "input",
-	  "fields": [
-		{ "name": "email", "placeholder": "", "required": true }
-	  ]
-	},
-	{
-	  "label": "Could you please provide your phone number?",
-	  "type": "input",
-	  "fields": [
-		{ "name": "phone_number", "placeholder": "", "required": true }
-	  ]
-	},
-	{
-	  "label": "Could you please provide your home phone number?",
-	  "type": "input",
-	  "fields": [
-		{ "name": "home_phone", "placeholder": "", "required": true }
-	  ]
-	},
-	{
-	  "label": "Could you please provide your work phone number (optional)?",
-	  "type": "input",
-	  "fields": [
-		{ "name": "work_phone", "placeholder": "", "required": false }
-	  ]
+		"label": "Which of the following best describes your disability?",
+		"type": "checkbox",
+		"options": [
+			"Physical or chronic health condition",
+			"Physical or mobility impairment",
+			"Mental or psychiatric disability",
+			"Vision-related disability",
+			"Hearing-related disability",
+			"Learning disability",
+			"Cognitive or intellectual disability",
+			"I prefer not to disclose"
+		],
+		"name": "disability_describes"
 	}
-  ]
-  
+]

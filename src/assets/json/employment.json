@@ -1,0 +1,14 @@
+[
+    {
+		"label": " Which of the following best describes your current employment situation",
+		"type": "radio",
+		"options": [
+			"Employed (working for pay)",
+			"Employed, but have received notice of termination or military separation is pending",
+			"Not employed and not looking for work",
+            "Not employed, but actively looking for work"
+		],
+		"name": "employment_situation"
+	}
+
+]

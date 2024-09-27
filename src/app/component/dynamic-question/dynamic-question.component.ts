@@ -38,7 +38,7 @@ import { HttpClient } from '@angular/common/http';
 export class DynamicQuestionComponent implements OnInit {
   constructor(public formBuilder: FormBuilder, private http: HttpClient) { }
   currentQuestionIndex = 0;
-  @Input() item: any = 'personal';
+  @Input() item: any = '';
   options!: FormGroup;
   questions: any = [
 
@@ -49,7 +49,8 @@ export class DynamicQuestionComponent implements OnInit {
     if (changes['item']) {
       console.log("Child Form Name: " + this.item);
       if (this.item != undefined) {
-
+    console.log(this.item+"gooddddddddvv");
+    
         this.loadInit(this.item)
       }
     }
@@ -92,8 +93,6 @@ export class DynamicQuestionComponent implements OnInit {
       console.log(res);
 
     })
-    console.warn("kkkkkkkkkkkkkkkkkkk",this.questions);
-    
    
     this.loadInit("personal")
 
