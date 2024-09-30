@@ -1,36 +1,54 @@
 [
 	{
 		"label": "Do you have a physical or mental disability as defined by the Americans with Disabilities Act (ADA), that substantially limits one or more major life activities?",
-		"type": "radio",
-		"options": [
-			"No",
-			"Yes",
-			"I prefer not to disclose"
+		"fields": [
+			{
+				"type": "radio",
+				"options": [
+					"No",
+					"Yes",
+					"I prefer not to disclose"
+				],
+				"name": "disability"
+			}
 		],
-		"name": "disability"
+		"sectionHint": "This section is about your disability status Information.",
+		"questionHint": "Yes: If you have a disability that affects activities such as walking, hearing, seeing, speaking, learning, etc.No: If you do not have any such disability."
 	},
 	{
 		"label": "Would you like to provide further details about your disability or its impact on your participation?",
-		"type": "radio",
-		"options": [
-			"No",
-			"Yes"
+		"fields": [
+			{
+				"type": "radio",
+				"options": [
+					"No",
+					"Yes"
+				],
+				"name": "disability_impact"
+			}
 		],
-		"name": "disability_impact"
+		"sectionHint": "This section is about your disability status Information.",
+		"questionHint": "Yes: If you would like to share additional information about your disability and how it may affect your participation.No: If you do not wish to provide further details at this time.Please select either 'Yes' or 'No.'"
 	},
 	{
 		"label": "Which of the following best describes your disability?",
-		"type": "checkbox",
-		"options": [
-			"Physical or chronic health condition",
-			"Physical or mobility impairment",
-			"Mental or psychiatric disability",
-			"Vision-related disability",
-			"Hearing-related disability",
-			"Learning disability",
-			"Cognitive or intellectual disability",
-			"I prefer not to disclose"
+		"fields": [
+			{
+				"type": "checkbox",
+				"options": [
+					"Physical or chronic health condition",
+					"Physical or mobility impairment",
+					"Mental or psychiatric disability",
+					"Vision-related disability",
+					"Hearing-related disability",
+					"Learning disability",
+					"Cognitive or intellectual disability",
+					"I prefer not to disclose"
+				],
+				"name": "disability_describes"
+			}
 		],
-		"name": "disability_describes"
+		"sectionHint": "This section is about your disability status Information.",
+		"questionHint": "Could you please indicate your disability by checking all that apply?"
 	}
 ]

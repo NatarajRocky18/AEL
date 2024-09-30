@@ -1,79 +1,182 @@
 [
 	{
-	  "label": "What is your full name?",
-	  "type": "input",
-	  "fields": [
-		{ "name": "firstName", "placeholder": "First Name", "required": true },
-		{ "name": "middleName", "placeholder": "Middle Name", "required": false },
-		{ "name": "lastName", "placeholder": "Last Name", "required": true }
-	  ]
+		"label": "What is your full name?",
+		"fields": [
+			{
+				"name": "firstName",
+				"type": "input",
+				"placeholder": "First Name",
+				"required": true
+			},
+			{
+				"name": "middleName",
+				"type": "input",
+				"placeholder": "Middle Name",
+				"required": false
+			},
+			{
+				"name": "lastName",
+				"type": "input",
+				"placeholder": "Last Name",
+				"required": true
+			}
+		],
+		"sectionHint": "This section is about your Personal Identifying Information.",
+		"questionHint": "First Name: Your given name (e.g., John).Middle Name: Optional. If you don’t have one, you can leave this blank.Last Name: Your family or surname (e.g., Doe)."
 	},
 	{
-	  "label": "Could you please select your date of birth?",
-	  "type": "datepicker",
-	  "name": "date_of_birth"
+		"label": "Could you please select your date of birth?",
+		"fields": [
+			{
+				"type": "datepicker",
+				"name": "date_of_birth"
+			}
+		],
+		"sectionHint": "This section is about your Personal Identifying Information.",
+		"questionHint": "Could you please select your date of birth? You can choose the date using the calendar option. Please make sure to enter it in the format MM/DD/YYYY. For example, if your birthday is January 5th, 1990, it should be entered as 01/05/1990."
 	},
 	{
-	  "label": "Could you please select your gender?",
-	  "type": "radio",
-	  "options": ["Male", "Female", "I prefer not to disclose"],
-	  "name": "gender"
+		"label": "Could you please select your gender?",
+		"fields": [
+			{
+				"type": "radio",
+				"options": [
+					"Male",
+					"Female",
+					"I prefer not to disclose"
+				],
+				"name": "gender"
+			}
+		],
+		"sectionHint": "This section is about your Personal Identifying Information.",
+		"questionHint": "Could you please select your gender? You can choose from the following options: Male, Female, or Prefer not to say. Just click on the option that best describes you."
 	},
 	{
-	  "label": "Could you please select your ethnicity?",
-	  "type": "radio",
-	  "options": ["Hispanic/Latino", "Not Hispanic/Latino"],
-	  "name": "ethnicity"
+		"label": "Could you please select your ethnicity?",
+		"fields": [
+			{
+				"type": "radio",
+				"options": [
+					"Hispanic/Latino",
+					"Not Hispanic/Latino"
+				],
+				"name": "ethnicity"
+			}
+		],
+		"sectionHint": "This section is about your Personal Identifying Information.",
+		"questionHint": "You can choose from the following options:Hispanic/Latino: If you identify as Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race.Not Hispanic/Latino: If you do not identify with any of the above."
 	},
 	{
-	  "label": "Could you please indicate your race by checking all that apply?",
-	  "type": "checkbox",
-	  "options": [
-		"American Indian or Alaskan Native",
-		"Native Hawaiian or Other Pacific Islander",
-		"Asian",
-		"White",
-		"Black/African American"
-	  ],
-	  "name": "languages"
+		"label": "Could you please indicate your race by checking all that apply?",
+		"fields": [
+			{
+				"type": "checkbox",
+				"options": [
+					"American Indian or Alaskan Native",
+					"Native Hawaiian or Other Pacific Islander",
+					"Asian",
+					"White",
+					"Black/African American"
+				],
+				"name": "languages"
+			}
+		],
+		"sectionHint": "This section is about your Personal Identifying Information.",
+		"questionHint": "Could you please indicate your race by checking all that apply?"
 	},
 	{
-	  "label": "Could you please provide your mailing address?",
-	  "type": "input",
-	  "fields": [
-		{ "name": "street_address", "placeholder": "Street address", "required": true },
-		{ "name": "city", "placeholder": "City", "required": true },
-		{ "name": "state", "placeholder": "State", "required": false },
-		{ "name": "zip", "placeholder": "Zip", "required": true }
-	  ]
+		"label": "Could you please provide your mailing address?",
+		"fields": [
+			{
+				"name": "street_address",
+				"type": "input",
+				"placeholder": "Street address",
+				"required": true
+			},
+			{
+				"name": "city",
+				"type": "input",
+				"placeholder": "City",
+				"required": true
+			},
+			{
+				"name": "state",
+				"type": "input",
+				"placeholder": "State",
+				"required": false
+			},
+			{
+				"name": "zip",
+				"type": "input",
+				"placeholder": "Zip",
+				"required": true
+			}
+		],
+		"sectionHint": "This section is about your Personal Identifying Information.",
+		"questionHint": "Street Address,City,State/Province,Postal/Zip Code"
 	},
 	{
-	  "label": "Could you please provide your email address?",
-	  "type": "input",
-	  "fields": [
-		{ "name": "email", "placeholder": "", "required": true }
-	  ]
+		"label": "Could you please provide your email address?",
+		"fields": [
+			{
+				"type": "input",
+				"name": "email",
+				"placeholder": "Email",
+				"required": true
+			}
+		],
+		"sectionHint": "This section is about your Personal Identifying Information.",
+		"questionHint": "Format: Ensure it includes the '@' symbol and a domain (e.g., example@gmail.com)."
 	},
 	{
-	  "label": "Could you please provide your phone number?",
-	  "type": "input",
-	  "fields": [
-		{ "name": "phone_number", "placeholder": "", "required": true }
-	  ]
+		"label": "Could you please provide your phone number?",
+		"fields": [
+			{
+				"name": "phone_number",
+				"type": "input",
+				"placeholder": "phone number",
+				"required": true
+			}
+		],
+		"sectionHint": "This section is about your Personal Identifying Information.",
+		"questionHint": "Please include your area code (e.g., (123) 456-7890)."
 	},
 	{
-	  "label": "Could you please provide your home phone number?",
-	  "type": "input",
-	  "fields": [
-		{ "name": "home_phone", "placeholder": "", "required": true }
-	  ]
+		"label": "Could you please provide your home phone number (optional) ?",
+		"fields": [
+			{
+				"name": "home_phone_number",
+				"type": "checkbox",
+				"options": [
+					"I don’t have one"
+				]
+			},
+			{
+				"name": "home_phone_numbers",
+				"type": "input",
+				"placeholder": "Home Phone number"
+			}
+		],
+		"sectionHint": "This section is about your Personal Identifying Information.",
+		"questionHint": "Please include your area code (e.g., (123) 456-7890)."
 	},
 	{
-	  "label": "Could you please provide your work phone number (optional)?",
-	  "type": "input",
-	  "fields": [
-		{ "name": "work_phone", "placeholder": "", "required": false }
-	  ]
+		"label": "Could you please provide your work phone number (optional)?",
+		"fields": [
+			{
+				"name": "work_phone_number",
+				"type": "checkbox",
+				"options": [
+					"I don’t have one"
+				]
+			},
+			{
+				"name": "work_phone_numbers",
+				"type": "input",
+				"placeholder": "Office number"
+			}
+		],
+		"sectionHint": "This section is about your Personal Identifying Information.",
+		"questionHint": "Please include your area code (e.g., (123) 456-7890)."
 	}
-  ]
-  
+]

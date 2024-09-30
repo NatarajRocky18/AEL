@@ -13,6 +13,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClient } from '@angular/common/http';
+import { HelpsService } from '../../services/helps.service';
 
 @Component({
   selector: 'app-dynamic-question',
@@ -36,21 +37,20 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./dynamic-question.component.css']
 })
 export class DynamicQuestionComponent implements OnInit {
-  constructor(public formBuilder: FormBuilder, private http: HttpClient) { }
+
+  constructor(public formBuilder: FormBuilder, private http: HttpClient, private helperServices: HelpsService) { }
+
   currentQuestionIndex = 0;
   @Input() item: any = '';
   options!: FormGroup;
-  questions: any = [
-
-  ]
+  questions: any = []
 
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['item']) {
       console.log("Child Form Name: " + this.item);
       if (this.item != undefined) {
-    console.log(this.item+"gooddddddddvv");
-    
+
         this.loadInit(this.item)
       }
     }
@@ -59,24 +59,33 @@ export class DynamicQuestionComponent implements OnInit {
 
   loadInit(formName: string) {
     this.http.get(`assets/json/${formName}.json`).subscribe(
-      (res: any) => {
+      (response: any) => {
 
-        this.questions = res;
-        this.questions.forEach((res: any) => {
-          if (res.type == "checkbox") {
-            this.options.addControl(res.name, this.formBuilder.array([]))
-            const formarray = this.options.get(res.name) as FormArray
-            res.options.forEach((element: any) => {
-              formarray.push(new FormControl())
-            });
-          } else if (res.type == "input") {
-            res.fields.forEach((element: any) => {
-              this.options.addControl(element.name, new FormControl())
-            });
-          } else {
-            this.options.addControl(res.name, new FormControl())
-          }
+        this.questions = response;
+        this.questions.forEach((fieldarr: any) => {
+          fieldarr.fields.forEach((res: any) => {
+            if (res.type == "checkbox") {
+              this.options.addControl(res.name, this.formBuilder.array([]))
+              const formarray = this.options.get(res.name) as FormArray
+              res.options.forEach((element: any) => {
+                formarray.push(new FormControl())
+              });
+            } else if (res.type == "input") {
+              // res.fields.forEach((element: any) => {
+              this.options.addControl(res.name, new FormControl())
+
+              // });
+            } else {
+              this.options.addControl(res.name, new FormControl())
+            }
+            if (res.required) {
+              const control = this.options.get(res.name) as FormControl
+              control.setValidators(Validators.required)
+            }
+          })
         })
+        this.helperServices.setSidenavBehaviour(this.questions[this.currentQuestionIndex])
+
         this.options.reset();
       },
       (error: any) => {
@@ -89,30 +98,23 @@ export class DynamicQuestionComponent implements OnInit {
 
     this.options = this.formBuilder.group({
     });
-    this.options.valueChanges.subscribe((res) => {
-      console.log(res);
-
-    })
-   
     this.loadInit("personal")
 
   }
 
-
-
-
   configloaded = true
   get isFormValid(): boolean {
-    const currentQuestion = this.questions[this.currentQuestionIndex];
+    return true;
+    // const currentQuestion = this.questions[this.currentQuestionIndex];
 
-    if (currentQuestion.type === 'input' && currentQuestion.fields) {
-      return currentQuestion.fields.every((field: any) =>
-        this.options.get(field.name)?.valid ?? false
-      );
-    }
+    // if (currentQuestion.type === 'input' && currentQuestion.fields) {
+    //   return currentQuestion.fields.every((field: any) =>
+    //     this.options.get(field.name)?.valid ?? false
+    //   );
+    // }
 
-    const control = this.options.get(currentQuestion.name!);
-    return control ? control.valid : false;
+    // const control = this.options.get(currentQuestion.name!);
+    // return control ? control.valid : false;
   }
 
   addvalue(name: any, value: any) {
@@ -124,6 +126,8 @@ export class DynamicQuestionComponent implements OnInit {
     if (this.isFormValid) {
       if (this.currentQuestionIndex < this.questions.length - 1) {
         this.currentQuestionIndex++;
+        this.helperServices.setSidenavBehaviour(this.questions[this.currentQuestionIndex])
+
       }
     } else {
       this.options.markAllAsTouched();
@@ -133,6 +137,8 @@ export class DynamicQuestionComponent implements OnInit {
   prevQuestion(): void {
     if (this.currentQuestionIndex > 0) {
       this.currentQuestionIndex--;
+      this.helperServices.setSidenavBehaviour(this.questions[this.currentQuestionIndex])
+
     }
   }
 }

@@ -1,14 +1,64 @@
 [
-    {
-		"label": " Which of the following best describes your current employment situation",
-		"type": "radio",
-		"options": [
-			"Employed (working for pay)",
-			"Employed, but have received notice of termination or military separation is pending",
-			"Not employed and not looking for work",
-            "Not employed, but actively looking for work"
+	{
+		"label": "Which of the following best describes your current employment situation",
+		"fields": [
+			{
+				"type": "radio",
+				"options": [
+					"Employed (working for pay)",
+					"Employed, but have received notice of termination or military separation is pending",
+					"Not employed and not looking for work",
+					"Not employed, but actively looking for work"
+				],
+				"name": "employment_situation"
+			}
 		],
-		"name": "employment_situation"
-	}
+		"sectionHint": "This section is about your employment status.",
+		"questionHint": "Please select the option that best describes your current employment status."
+	},
+	{
+		"label": "How many hours per week do you work on average?",
+		"fields": [
+			{
+				"type": "input",
+				"placeholder": "Hours",
+				"name": "employment_situation"
 
+			}
+		],
+		"sectionHint": "This section is about your employment status.",
+		"questionHint": "You might work part-time (e.g., 20 hours), full-time (e.g., 40 hours), or more than 40 hours per week."
+	},
+	{
+		"label": "Have you received a notice of termination or layoff?",
+		"fields": [
+			{
+				"type": "radio",
+				"options": [
+					"No",
+					"Yes"
+				],
+				"name": "employment_situation"
+			}
+		],
+		"sectionHint": "This section is about your employment status.",
+		"questionHint": "Yes: If you have received a formal notice indicating that your employment will be terminated or that you are being laid off.No: If you have not received such a notice and are currently employed.Please select the option that accurately reflects your situation."
+	},
+	{
+		"label": "The notice of termination or layoff due to",
+		"fields": [
+			{
+				"type": "radio",
+				"options": [
+					"Permanent closure of your workplace",
+					"Substantial layoff at your workplace",
+					"General announcement that your facility will close within 180 days",
+					"General announcement that your facility will closed more than 180 days"
+				],
+				"name": "employment_situation"
+			}
+		],
+		"sectionHint": "This section is about your employment status.",
+		"questionHint": "Please select the option that best explains the reason for your notice of termination or layoff"
+	}
 ]
