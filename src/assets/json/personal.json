@@ -1,6 +1,7 @@
 [
+
 	{
-		"label": "What is your full name?",
+		"question": "What is your full name?",
 		"fields": [
 			{
 				"name": "firstName",
@@ -25,7 +26,7 @@
 		"questionHint": "First Name: Your given name (e.g., John).Middle Name: Optional. If you don’t have one, you can leave this blank.Last Name: Your family or surname (e.g., Doe)."
 	},
 	{
-		"label": "Could you please select your date of birth?",
+		"question": "Could you please select your date of birth?",
 		"fields": [
 			{
 				"type": "datepicker",
@@ -36,7 +37,7 @@
 		"questionHint": "Could you please select your date of birth? You can choose the date using the calendar option. Please make sure to enter it in the format MM/DD/YYYY. For example, if your birthday is January 5th, 1990, it should be entered as 01/05/1990."
 	},
 	{
-		"label": "Could you please select your gender?",
+		"question": "Could you please select your gender?",
 		"fields": [
 			{
 				"type": "radio",
@@ -52,7 +53,7 @@
 		"questionHint": "Could you please select your gender? You can choose from the following options: Male, Female, or Prefer not to say. Just click on the option that best describes you."
 	},
 	{
-		"label": "Could you please select your ethnicity?",
+		"question": "Could you please select your ethnicity?",
 		"fields": [
 			{
 				"type": "radio",
@@ -67,7 +68,7 @@
 		"questionHint": "You can choose from the following options:Hispanic/Latino: If you identify as Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race.Not Hispanic/Latino: If you do not identify with any of the above."
 	},
 	{
-		"label": "Could you please indicate your race by checking all that apply?",
+		"question": "Could you please indicate your race by checking all that apply?",
 		"fields": [
 			{
 				"type": "checkbox",
@@ -78,14 +79,14 @@
 					"White",
 					"Black/African American"
 				],
-				"name": "languages"
+				"name": "race"
 			}
 		],
 		"sectionHint": "This section is about your Personal Identifying Information.",
 		"questionHint": "Could you please indicate your race by checking all that apply?"
 	},
 	{
-		"label": "Could you please provide your mailing address?",
+		"question": "Could you please provide your mailing address?",
 		"fields": [
 			{
 				"name": "street_address",
@@ -116,7 +117,7 @@
 		"questionHint": "Street Address,City,State/Province,Postal/Zip Code"
 	},
 	{
-		"label": "Could you please provide your email address?",
+		"question": "Could you please provide your email address?",
 		"fields": [
 			{
 				"type": "input",
@@ -129,7 +130,7 @@
 		"questionHint": "Format: Ensure it includes the '@' symbol and a domain (e.g., example@gmail.com)."
 	},
 	{
-		"label": "Could you please provide your phone number?",
+		"question": "Could you please provide your phone number?",
 		"fields": [
 			{
 				"name": "phone_number",
@@ -142,15 +143,9 @@
 		"questionHint": "Please include your area code (e.g., (123) 456-7890)."
 	},
 	{
-		"label": "Could you please provide your home phone number (optional) ?",
+		"question": "Could you please provide your home phone number (optional) ?",
 		"fields": [
-			{
-				"name": "home_phone_number",
-				"type": "checkbox",
-				"options": [
-					"I don’t have one"
-				]
-			},
+			
 			{
 				"name": "home_phone_numbers",
 				"type": "input",
@@ -161,7 +156,7 @@
 		"questionHint": "Please include your area code (e.g., (123) 456-7890)."
 	},
 	{
-		"label": "Could you please provide your work phone number (optional)?",
+		"question": "Could you please provide your work phone number (optional)?",
 		"fields": [
 			{
 				"name": "work_phone_number",
@@ -178,5 +173,17 @@
 		],
 		"sectionHint": "This section is about your Personal Identifying Information.",
 		"questionHint": "Please include your area code (e.g., (123) 456-7890)."
+	},
+	{
+		"question": "",
+		"fields": [
+			{
+				"type": "summary"
+			}
+			
+		],
+		"sectionHint": "This section is about your Personal Identifying Information.",
+		"questionHint": "Does everything look good so far? Feel free to make any corrections. Otherwise, click 'Confirm' to proceed or 'Previous' to go back."
 	}
+		
 ]

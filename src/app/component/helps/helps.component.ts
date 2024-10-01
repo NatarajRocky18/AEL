@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClient } from '@angular/common/http';
-import { HelpsService } from '../../../services/helps.service';
+import { HelpsService } from '../../services/helps.service';
 
 @Component({
   selector: 'app-helps',

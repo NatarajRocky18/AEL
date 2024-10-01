@@ -1,6 +1,6 @@
 [
 	{
-		"label": "Which of the following best describes your current employment situation",
+		"question": "Which of the following best describes your current employment situation",
 		"fields": [
 			{
 				"type": "radio",
@@ -17,12 +17,12 @@
 		"questionHint": "Please select the option that best describes your current employment status."
 	},
 	{
-		"label": "How many hours per week do you work on average?",
+		"question": "How many hours per week do you work on average?",
 		"fields": [
 			{
 				"type": "input",
 				"placeholder": "Hours",
-				"name": "employment_situation"
+				"name": "employment_work_hour"
 
 			}
 		],
@@ -30,7 +30,7 @@
 		"questionHint": "You might work part-time (e.g., 20 hours), full-time (e.g., 40 hours), or more than 40 hours per week."
 	},
 	{
-		"label": "Have you received a notice of termination or layoff?",
+		"question": "Have you received a notice of termination or layoff?",
 		"fields": [
 			{
 				"type": "radio",
@@ -38,14 +38,14 @@
 					"No",
 					"Yes"
 				],
-				"name": "employment_situation"
+				"name": "termination_layoff"
 			}
 		],
 		"sectionHint": "This section is about your employment status.",
 		"questionHint": "Yes: If you have received a formal notice indicating that your employment will be terminated or that you are being laid off.No: If you have not received such a notice and are currently employed.Please select the option that accurately reflects your situation."
 	},
 	{
-		"label": "The notice of termination or layoff due to",
+		"question": "The notice of termination or layoff due to",
 		"fields": [
 			{
 				"type": "radio",
@@ -55,7 +55,7 @@
 					"General announcement that your facility will close within 180 days",
 					"General announcement that your facility will closed more than 180 days"
 				],
-				"name": "employment_situation"
+				"name": "due_to_layoff"
 			}
 		],
 		"sectionHint": "This section is about your employment status.",

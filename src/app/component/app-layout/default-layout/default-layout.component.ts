@@ -5,7 +5,7 @@ import { SideNavbarComponent } from "../side-navbar/side-navbar.component";
 import { AppHeaderComponent } from "../app-header/app-header.component";
 import { AppFooterComponent } from "../app-footer/app-footer.component";
 import { CommonModule } from '@angular/common';
-import { HelpsComponent } from '../helps/helps.component';
+import { HelpsComponent } from '../../helps/helps.component';
 import { DynamicQuestionComponent } from '../../dynamic-question/dynamic-question.component';
 // import { JwtHelperService } from '@auth0/angular-jwt';
 // import { DataService } from 'src/app/services/data.service';

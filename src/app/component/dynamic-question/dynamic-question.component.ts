@@ -43,7 +43,11 @@ export class DynamicQuestionComponent implements OnInit {
   currentQuestionIndex = 0;
   @Input() item: any = '';
   options!: FormGroup;
-  questions: any = []
+  questions: any = [];
+  profileSummary: { [key: string]: any } = {};
+
+  selectedRaces: string[] = [];
+
 
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -60,7 +64,8 @@ export class DynamicQuestionComponent implements OnInit {
   loadInit(formName: string) {
     this.http.get(`assets/json/${formName}.json`).subscribe(
       (response: any) => {
-
+        this.currentQuestionIndex = 0
+        this.options = new FormGroup({})
         this.questions = response;
         this.questions.forEach((fieldarr: any) => {
           fieldarr.fields.forEach((res: any) => {
@@ -70,12 +75,7 @@ export class DynamicQuestionComponent implements OnInit {
               res.options.forEach((element: any) => {
                 formarray.push(new FormControl())
               });
-            } else if (res.type == "input") {
-              // res.fields.forEach((element: any) => {
-              this.options.addControl(res.name, new FormControl())
-
-              // });
-            } else {
+            } else if (res.type != "summary") {
               this.options.addControl(res.name, new FormControl())
             }
             if (res.required) {
@@ -86,7 +86,6 @@ export class DynamicQuestionComponent implements OnInit {
         })
         this.helperServices.setSidenavBehaviour(this.questions[this.currentQuestionIndex])
 
-        this.options.reset();
       },
       (error: any) => {
         console.error('Error fetching data:', error);
@@ -120,15 +119,19 @@ export class DynamicQuestionComponent implements OnInit {
   addvalue(name: any, value: any) {
     this.options.get(name)?.setValue(value)
   }
+
   nextQuestion(): void {
     console.log(this.options.value);
+    this.profileSummary = this.options.value;
+    console.log(this.profileSummary);
+
 
     if (this.isFormValid) {
-      if (this.currentQuestionIndex < this.questions.length - 1) {
-        this.currentQuestionIndex++;
-        this.helperServices.setSidenavBehaviour(this.questions[this.currentQuestionIndex])
 
-      }
+      this.currentQuestionIndex++;
+      this.helperServices.setSidenavBehaviour(this.questions[this.currentQuestionIndex])
+
+
     } else {
       this.options.markAllAsTouched();
     }
@@ -141,4 +144,30 @@ export class DynamicQuestionComponent implements OnInit {
 
     }
   }
+
+  formatValue(key: string, value: any = "notgiven"): string {
+    if (value == "notgiven") {
+      return 'Not provided';
+    }
+    if (key === 'race') {
+      return this.selectedRaces.join(', ') || 'None selected';
+    }
+    if (key === 'date_of_birth' && value) {
+      return new Date(value).toLocaleDateString();
+    }
+
+    return value !== null && value !== undefined ? String(value) : 'Not provided';
+  }
+
+  updateSelectedRaces(option: string, isChecked: boolean) {
+    if (isChecked) {
+      this.selectedRaces.push(option);
+    } else {
+      const index = this.selectedRaces.indexOf(option);
+      if (index > -1) {
+        this.selectedRaces.splice(index, 1);
+      }
+    }
+  }
+
 }

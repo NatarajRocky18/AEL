@@ -1,6 +1,6 @@
 [
 	{
-		"label": "Do you have a physical or mental disability as defined by the Americans with Disabilities Act (ADA), that substantially limits one or more major life activities?",
+		"question": "Do you have a physical or mental disability as defined by the Americans with Disabilities Act (ADA), that substantially limits one or more major life activities?",
 		"fields": [
 			{
 				"type": "radio",
@@ -16,7 +16,7 @@
 		"questionHint": "Yes: If you have a disability that affects activities such as walking, hearing, seeing, speaking, learning, etc.No: If you do not have any such disability."
 	},
 	{
-		"label": "Would you like to provide further details about your disability or its impact on your participation?",
+		"question": "Would you like to provide further details about your disability or its impact on your participation?",
 		"fields": [
 			{
 				"type": "radio",
@@ -31,7 +31,7 @@
 		"questionHint": "Yes: If you would like to share additional information about your disability and how it may affect your participation.No: If you do not wish to provide further details at this time.Please select either 'Yes' or 'No.'"
 	},
 	{
-		"label": "Which of the following best describes your disability?",
+		"question": "Which of the following best describes your disability?",
 		"fields": [
 			{
 				"type": "checkbox",
