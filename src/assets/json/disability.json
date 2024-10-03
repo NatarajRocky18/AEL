@@ -9,7 +9,8 @@
 					"Yes",
 					"I prefer not to disclose"
 				],
-				"name": "disability"
+				"name": "disability",
+				"label":"Do you have a physical or mental disability as defined by the Americans with Disabilities Act (ADA), that substantially limits one or more major life activities"
 			}
 		],
 		"sectionHint": "This section is about your disability status Information.",
@@ -24,7 +25,9 @@
 					"No",
 					"Yes"
 				],
-				"name": "disability_impact"
+				"name": "disability_impact",
+				"label":"Would you like to provide further details about your disability or its impact on your participation"
+				
 			}
 		],
 		"sectionHint": "This section is about your disability status Information.",
@@ -45,10 +48,21 @@
 					"Cognitive or intellectual disability",
 					"I prefer not to disclose"
 				],
-				"name": "disability_describes"
+				"name": "disability_describes",
+				"label":"best describes your disability"
 			}
 		],
 		"sectionHint": "This section is about your disability status Information.",
 		"questionHint": "Could you please indicate your disability by checking all that apply?"
+	},
+	{
+		"question": "",
+		"fields": [
+			{
+				"type": "summary"
+			}
+		],
+		"sectionHint": "This section is about your Personal Identifying Information.",
+		"questionHint": "Does everything look good so far? Feel free to make any corrections. Otherwise, click 'Confirm' to proceed or 'Previous' to go back."
 	}
 ]

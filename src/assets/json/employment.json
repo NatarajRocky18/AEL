@@ -10,7 +10,8 @@
 					"Not employed and not looking for work",
 					"Not employed, but actively looking for work"
 				],
-				"name": "employment_situation"
+				"name": "employment_situation",
+				"label":"current employment situation"
 			}
 		],
 		"sectionHint": "This section is about your employment status.",
@@ -22,7 +23,8 @@
 			{
 				"type": "input",
 				"placeholder": "Hours",
-				"name": "employment_work_hour"
+				"name": "employment_work_hour",
+				"label":" hours per week do you work on average"
 
 			}
 		],
@@ -38,7 +40,8 @@
 					"No",
 					"Yes"
 				],
-				"name": "termination_layoff"
+				"name": "termination_layoff",
+				"label":"Have you received a notice of termination or layoff"
 			}
 		],
 		"sectionHint": "This section is about your employment status.",
@@ -55,10 +58,21 @@
 					"General announcement that your facility will close within 180 days",
 					"General announcement that your facility will closed more than 180 days"
 				],
-				"name": "due_to_layoff"
+				"name": "due_to_layoff",
+				"label":"The notice of termination or layoff due to"
 			}
 		],
 		"sectionHint": "This section is about your employment status.",
 		"questionHint": "Please select the option that best explains the reason for your notice of termination or layoff"
+	},
+	{
+		"question": "",
+		"fields": [
+			{
+				"type": "summary"
+			}
+		],
+		"sectionHint": "This section is about your Personal Identifying Information.",
+		"questionHint": "Does everything look good so far? Feel free to make any corrections. Otherwise, click 'Confirm' to proceed or 'Previous' to go back."
 	}
 ]

@@ -1,4 +1,10 @@
 .help-container {
     padding: 10px;
+    background-color: #f5f6fb;
+    height: 90vh;
   }
-  
+  /* .right-sidebar[_ngcontent-ng-c3628421862] {
+    width: 25%;
+    background-color: #f5f6fb;
+    padding: 10px;
+} */

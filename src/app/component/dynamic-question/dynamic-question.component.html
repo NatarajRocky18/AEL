@@ -32,16 +32,16 @@
         </ng-container>
 
         <!-- Dynamic rendering for checkbox questions -->
-        
-                <ng-container *ngIf="item.type === 'checkbox'">
-                    <div formArrayName="race">
-                        <div *ngFor="let option of item.options; let i = index">
-                            <mat-checkbox [formControlName]="i" (change)="updateSelectedRaces(option, $event.checked)">
-                                {{ option }}
-                            </mat-checkbox>
-                        </div>
-                    </div>
-                </ng-container>
+
+        <ng-container *ngIf="item.type === 'checkbox'">
+            <div formArrayName="{{item.name}}">
+                <div *ngFor="let option of item.options; let i = index">
+                    <mat-checkbox [formControlName]="i" (change)="updateSelectedRaces(option, $event.checked)">
+                        {{ option }}
+                    </mat-checkbox>
+                </div>
+            </div>
+        </ng-container>
 
 
         <!-- Dynamic rendering for date of birth questions -->
@@ -60,26 +60,35 @@
         <!-- dynamic summary screen -->
         <ng-container *ngIf="item.type === 'summary'">
             <div class="summary-card">
-                <h2 class="summary-title">Profile Summary</h2>
+                <h2 class="summary-title"> Summary</h2>
                 <div class="key-value-container">
                     <div *ngFor="let entry of profileSummary | keyvalue" class="key-value-entry">
-                        <span class="key">{{ entry.key | titlecase }}</span>
-                        <!-- <span>:</span> -->
-                        <span class="value"> : {{ formatValue(entry.key, entry.value) }}</span>
+                        <!-- <span class="key">{{ entry.key | titlecase }}</span>
+                         <span class="value"> : {{ formatValue(entry.key, entry.value) }}</span> -->
+                        <span class="key">{{ entry.value.label | titlecase }}</span>
+                        <span class="value"> {{ formatValue(entry.value.key, entry.value.value) }}</span>
                     </div>
+                    <div class="submit-details-heading">
+                        <p>Do you with to submit your details ?</p>
+                    </div>
+                    <div class="next-button">
+                        <button mat-flat-button>Cancel</button> &nbsp;
+                        <button mat-flat-button>Confirm</button>
+                    </div>
+
                 </div>
             </div>
-        </ng-container>        
-    
-        }
+        </ng-container>
 
         }
         }
-
+        }
 
         <div class="next-button">
-            <button mat-flat-button (click)="prevQuestion()" *ngIf="currentQuestionIndex > 0">Previous</button> &nbsp;
-            <button mat-flat-button (click)="nextQuestion()" [disabled]="!isFormValid">Next</button>
+            <button class="previous-button" mat-button (click)="prevQuestion()"
+                *ngIf="currentQuestionIndex > 0">Previous</button> &nbsp;
+            <button class="next-buttons" mat-flat-button (click)="nextQuestion()" [disabled]="!isFormValid"
+                *ngIf="!isLastQuestion()">Next</button>
         </div>
     </form>
 </div>

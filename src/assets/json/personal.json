@@ -1,22 +1,24 @@
 [
-
 	{
 		"question": "What is your full name?",
 		"fields": [
 			{
-				"name": "firstName",
+				"name": "first_name",
+				"label": "First name",
 				"type": "input",
-				"placeholder": "First Name",
+				"placeholder": "First Name", 	
 				"required": true
 			},
 			{
 				"name": "middleName",
+				"label": "Middle name",
 				"type": "input",
 				"placeholder": "Middle Name",
 				"required": false
 			},
 			{
 				"name": "lastName",
+				"label": "Last name",
 				"type": "input",
 				"placeholder": "Last Name",
 				"required": true
@@ -30,7 +32,8 @@
 		"fields": [
 			{
 				"type": "datepicker",
-				"name": "date_of_birth"
+				"name": "date_of_birth",
+				"label": "Date of birth"
 			}
 		],
 		"sectionHint": "This section is about your Personal Identifying Information.",
@@ -46,7 +49,8 @@
 					"Female",
 					"I prefer not to disclose"
 				],
-				"name": "gender"
+				"name": "gender",
+				"label": "Gender"
 			}
 		],
 		"sectionHint": "This section is about your Personal Identifying Information.",
@@ -61,7 +65,8 @@
 					"Hispanic/Latino",
 					"Not Hispanic/Latino"
 				],
-				"name": "ethnicity"
+				"name": "ethnicity",
+				"label": "Ethnicity"
 			}
 		],
 		"sectionHint": "This section is about your Personal Identifying Information.",
@@ -79,7 +84,8 @@
 					"White",
 					"Black/African American"
 				],
-				"name": "race"
+				"name": "race",
+				"label": "Race"
 			}
 		],
 		"sectionHint": "This section is about your Personal Identifying Information.",
@@ -90,24 +96,28 @@
 		"fields": [
 			{
 				"name": "street_address",
+				"label": "Street Address",
 				"type": "input",
 				"placeholder": "Street address",
 				"required": true
 			},
 			{
 				"name": "city",
+				"label": "City",
 				"type": "input",
 				"placeholder": "City",
 				"required": true
 			},
 			{
 				"name": "state",
+				"label": "State",
 				"type": "input",
 				"placeholder": "State",
 				"required": false
 			},
 			{
 				"name": "zip",
+				"label": "Zip",
 				"type": "input",
 				"placeholder": "Zip",
 				"required": true
@@ -121,6 +131,7 @@
 		"fields": [
 			{
 				"type": "input",
+				"label": "Email",
 				"name": "email",
 				"placeholder": "Email",
 				"required": true
@@ -134,6 +145,7 @@
 		"fields": [
 			{
 				"name": "phone_number",
+				"label": "Phone number",
 				"type": "input",
 				"placeholder": "phone number",
 				"required": true
@@ -145,9 +157,9 @@
 	{
 		"question": "Could you please provide your home phone number (optional) ?",
 		"fields": [
-			
 			{
 				"name": "home_phone_numbers",
+				"label": "Home phone number",
 				"type": "input",
 				"placeholder": "Home Phone number"
 			}
@@ -160,6 +172,7 @@
 		"fields": [
 			{
 				"name": "work_phone_number",
+				"label": "Office phone number",
 				"type": "checkbox",
 				"options": [
 					"I don’t have one"
@@ -180,10 +193,8 @@
 			{
 				"type": "summary"
 			}
-			
 		],
 		"sectionHint": "This section is about your Personal Identifying Information.",
 		"questionHint": "Does everything look good so far? Feel free to make any corrections. Otherwise, click 'Confirm' to proceed or 'Previous' to go back."
 	}
-		
 ]

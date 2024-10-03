@@ -1,4 +1,3 @@
-/* 111 */
 .example-container mat-form-field+mat-form-field {
     margin-left: 8px;
     padding-left: 10px;
@@ -6,17 +5,11 @@
 }
 
 .example-container mat-form-field {
-    /* width: 220px; */
     padding-left: 30px;
 }
 
 .example-container form {
     margin-bottom: 20px;
-}
-
-.example-container form>* {
-    margin: 12px 0;
-    margin-left: 20px;
 }
 
 .example-container .mat-radio-button {
@@ -26,8 +19,6 @@
 .example-form-fields {
     display: flex;
     justify-content: flex-start;
-    /* align-items: flex-start; */
-    /* justify-content: center; */
     align-items: center;
     margin-left: 80px;
 }
@@ -49,8 +40,6 @@ p {
     display: flex;
     justify-content: flex-end;
     width: 75%;
-    margin-top: 20px;
-    height: 40px;
 
 }
 
@@ -58,19 +47,15 @@ p {
     padding: 10px;
 }
 
-.key {
-    font-weight: 500;
-    margin-right: 10px;
-}
 .value{
     color: #2c3e50;
     font-size: 17px;
 }
 
 .summary-card {
-    background-color: #f4f1f1;
+    background-color:#eaecf0;
     border-radius: 8px;
-    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1); 
+    /* box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);  */
     padding: 20px; 
     margin: 20px; 
     max-width: 600px; 
@@ -79,9 +64,9 @@ p {
 
 
 .summary-title {
-    font-size: 24px; 
+    font-size: 20px; 
     margin-bottom: 15px;
-    /* color: #333; */
+    text-align: center;
 }
 
 .key-value-container {
@@ -91,9 +76,6 @@ p {
 
 .key-value-entry {
     display: flex;
-
-    /* display: grid; */
-    /* grid-template-columns: 1fr 1fr; */
   justify-content: space-between;
     align-items: center; 
     padding: 10px 0;
@@ -105,7 +87,7 @@ p {
 }
 
 .key {
-    font-weight: bold; 
+    font-weight: 500; 
     min-width: 50%;
     max-width: 50%;
 }
@@ -113,4 +95,20 @@ p {
 .value {
     min-width: 50%;
     max-width: 50%;
+}
+.previous-button{
+    background-color: #eee7ff !important;
+    color: #323232 !important;
+    height: 50px;
+    width: 90px
+}
+
+.next-buttons{
+    background-color: #eafcf7 !important;
+    color: #323232 !important;
+    height: 50px;
+    width: 90px
+}
+.submit-details-heading{
+    margin: 0 auto;
 }

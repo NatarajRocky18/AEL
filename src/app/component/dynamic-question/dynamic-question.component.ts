@@ -45,7 +45,6 @@ export class DynamicQuestionComponent implements OnInit {
   options!: FormGroup;
   questions: any = [];
   profileSummary: { [key: string]: any } = {};
-
   selectedRaces: string[] = [];
 
 
@@ -68,18 +67,15 @@ export class DynamicQuestionComponent implements OnInit {
         this.options = new FormGroup({})
         this.questions = response;
         this.questions.forEach((fieldarr: any) => {
-          fieldarr.fields.forEach((res: any) => {
-            if (res.type == "checkbox") {
-              this.options.addControl(res.name, this.formBuilder.array([]))
-              const formarray = this.options.get(res.name) as FormArray
-              res.options.forEach((element: any) => {
-                formarray.push(new FormControl())
-              });
-            } else if (res.type != "summary") {
-              this.options.addControl(res.name, new FormControl())
+          fieldarr.fields.forEach((field: any) => {
+            if (field.type === 'checkbox') {
+              const formArray = this.formBuilder.array(field.options.map(() => new FormControl(false)));
+              this.options.addControl(field.name, formArray);
+            } else if (field.type != "summary") {
+              this.options.addControl(field.name, new FormControl())
             }
-            if (res.required) {
-              const control = this.options.get(res.name) as FormControl
+            if (field.required) {
+              const control = this.options.get(field.name) as FormControl
               control.setValidators(Validators.required)
             }
           })
@@ -104,16 +100,8 @@ export class DynamicQuestionComponent implements OnInit {
   configloaded = true
   get isFormValid(): boolean {
     return true;
-    // const currentQuestion = this.questions[this.currentQuestionIndex];
+    // return this.options.valid; 
 
-    // if (currentQuestion.type === 'input' && currentQuestion.fields) {
-    //   return currentQuestion.fields.every((field: any) =>
-    //     this.options.get(field.name)?.valid ?? false
-    //   );
-    // }
-
-    // const control = this.options.get(currentQuestion.name!);
-    // return control ? control.valid : false;
   }
 
   addvalue(name: any, value: any) {
@@ -121,10 +109,29 @@ export class DynamicQuestionComponent implements OnInit {
   }
 
   nextQuestion(): void {
-    console.log(this.options.value);
-    this.profileSummary = this.options.value;
-    console.log(this.profileSummary);
 
+    // this.profileSummary = this.options.value;
+
+    const optionsArray: any = [];
+    this.questions.forEach((questionData: any) => {
+      const fieldsArray = questionData.fields.map((field: any) => {
+        if (field.name && field.label) {
+          return {
+            key: field.name,
+            label: field.label,
+            value: this.options.get(field.name)?.value || 'Not provided2'
+          };
+        }
+
+        return null;
+      }).filter((field: any) => field !== null);
+
+      optionsArray.push(...fieldsArray);
+    });
+
+
+    this.profileSummary = optionsArray;
+    // console.warn(optionsArray)
 
     if (this.isFormValid) {
 
@@ -152,11 +159,17 @@ export class DynamicQuestionComponent implements OnInit {
     if (key === 'race') {
       return this.selectedRaces.join(', ') || 'None selected';
     }
+    if (key === 'disability_describes') {
+      return this.selectedRaces.join(', ') || 'None selected';
+    }
+    if (key === 'work_phone_number') {
+      return this.selectedRaces.join(', ') || 'None selected';
+    }
     if (key === 'date_of_birth' && value) {
       return new Date(value).toLocaleDateString();
     }
 
-    return value !== null && value !== undefined ? String(value) : 'Not provided';
+    return value !== null && value !== undefined ? String(value) : 'Not provided1';
   }
 
   updateSelectedRaces(option: string, isChecked: boolean) {
@@ -169,5 +182,10 @@ export class DynamicQuestionComponent implements OnInit {
       }
     }
   }
+
+  isLastQuestion(): boolean {
+    return this.currentQuestionIndex === this.questions.length - 1 ;
+}
+
 
 }
