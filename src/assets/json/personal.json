@@ -6,7 +6,7 @@
 				"name": "first_name",
 				"label": "First name",
 				"type": "input",
-				"placeholder": "First Name", 	
+				"placeholder": "First Name*", 	
 				"required": true
 			},
 			{
@@ -20,7 +20,7 @@
 				"name": "lastName",
 				"label": "Last name",
 				"type": "input",
-				"placeholder": "Last Name",
+				"placeholder": "Last Name*",
 				"required": true
 			}
 		],
@@ -33,7 +33,8 @@
 			{
 				"type": "datepicker",
 				"name": "date_of_birth",
-				"label": "Date of birth"
+				"label": "Date of birth",
+				"required": true
 			}
 		],
 		"sectionHint": "This section is about your Personal Identifying Information.",
@@ -50,7 +51,8 @@
 					"I prefer not to disclose"
 				],
 				"name": "gender",
-				"label": "Gender"
+				"label": "Gender",
+				"required": true
 			}
 		],
 		"sectionHint": "This section is about your Personal Identifying Information.",
@@ -66,7 +68,8 @@
 					"Not Hispanic/Latino"
 				],
 				"name": "ethnicity",
-				"label": "Ethnicity"
+				"label": "Ethnicity",
+				"required": true
 			}
 		],
 		"sectionHint": "This section is about your Personal Identifying Information.",
@@ -85,7 +88,8 @@
 					"Black/African American"
 				],
 				"name": "race",
-				"label": "Race"
+				"label": "Race",
+				"required": true
 			}
 		],
 		"sectionHint": "This section is about your Personal Identifying Information.",
@@ -98,28 +102,28 @@
 				"name": "street_address",
 				"label": "Street Address",
 				"type": "input",
-				"placeholder": "Street address",
+				"placeholder": "Street address*",
 				"required": true
 			},
 			{
 				"name": "city",
 				"label": "City",
 				"type": "input",
-				"placeholder": "City",
+				"placeholder": "City*",
 				"required": true
 			},
 			{
 				"name": "state",
 				"label": "State",
 				"type": "input",
-				"placeholder": "State",
-				"required": false
+				"placeholder": "State*",
+				"required": true
 			},
 			{
 				"name": "zip",
 				"label": "Zip",
 				"type": "input",
-				"placeholder": "Zip",
+				"placeholder": "Zip*",
 				"required": true
 			}
 		],
@@ -133,7 +137,7 @@
 				"type": "input",
 				"label": "Email",
 				"name": "email",
-				"placeholder": "Email",
+				"placeholder": "Email*",
 				"required": true
 			}
 		],
@@ -147,7 +151,7 @@
 				"name": "phone_number",
 				"label": "Phone number",
 				"type": "input",
-				"placeholder": "phone number",
+				"placeholder": "Phone number*",
 				"required": true
 			}
 		],
@@ -180,6 +184,7 @@
 			},
 			{
 				"name": "work_phone_numbers",
+				"label": "Office phone numbers",
 				"type": "input",
 				"placeholder": "Office number"
 			}

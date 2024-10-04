@@ -11,6 +11,7 @@
 					"Not employed, but actively looking for work"
 				],
 				"name": "employment_situation",
+				"required": true,
 				"label":"current employment situation"
 			}
 		],
@@ -24,6 +25,7 @@
 				"type": "input",
 				"placeholder": "Hours",
 				"name": "employment_work_hour",
+				"required": true,
 				"label":" hours per week do you work on average"
 
 			}
@@ -41,6 +43,7 @@
 					"Yes"
 				],
 				"name": "termination_layoff",
+				"required": true,
 				"label":"Have you received a notice of termination or layoff"
 			}
 		],
@@ -59,6 +62,7 @@
 					"General announcement that your facility will closed more than 180 days"
 				],
 				"name": "due_to_layoff",
+				"required": true,
 				"label":"The notice of termination or layoff due to"
 			}
 		],

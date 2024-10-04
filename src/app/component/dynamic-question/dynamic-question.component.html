@@ -10,6 +10,9 @@
             <mat-form-field>
                 <input matInput [placeholder]="item?.placeholder" formControlName="{{item.name}}"
                     [required]="item.required" />
+                    <mat-error *ngIf="options.get(item.name)?.hasError('required')&& options.get(item.name)?.touched">
+                        {{ item.label }} is required.
+                      </mat-error>  
             </mat-form-field>
         </ng-container>
 
@@ -62,12 +65,16 @@
             <div class="summary-card">
                 <h2 class="summary-title"> Summary</h2>
                 <div class="key-value-container">
-                    <div *ngFor="let entry of profileSummary | keyvalue" class="key-value-entry">
-                        <!-- <span class="key">{{ entry.key | titlecase }}</span>
-                         <span class="value"> : {{ formatValue(entry.key, entry.value) }}</span> -->
-                        <span class="key">{{ entry.value.label | titlecase }}</span>
+                    <!-- <div *ngFor="let entry of profileSummary | keyvalue" class="key-value-entry">
+                          <span class="key">{{ entry.value.label | titlecase }}</span>
                         <span class="value"> {{ formatValue(entry.value.key, entry.value.value) }}</span>
-                    </div>
+                    </div> -->
+                    @for (item of profiledetails; track $index) {
+                        <div class="key-value-entry">
+                          <span class="key">{{ item.label | titlecase }}</span>
+                          <span class="value"> {{ formatValue(item.key, item.value) }}</span>
+                        </div>
+                    }
                     <div class="submit-details-heading">
                         <p>Do you with to submit your details ?</p>
                     </div>
@@ -87,7 +94,9 @@
         <div class="next-button">
             <button class="previous-button" mat-button (click)="prevQuestion()"
                 *ngIf="currentQuestionIndex > 0">Previous</button> &nbsp;
-            <button class="next-buttons" mat-flat-button (click)="nextQuestion()" [disabled]="!isFormValid"
+                <button class="next-buttons" mat-flat-button (click)="nextQuestion()" 
+                [ngClass]="{'enabled-button':isCurrentQuestionValid(),'disabled-button':!isCurrentQuestionValid()}"
+                [disabled]="!isCurrentQuestionValid()"
                 *ngIf="!isLastQuestion()">Next</button>
         </div>
     </form>

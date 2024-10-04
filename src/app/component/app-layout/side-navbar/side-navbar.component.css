@@ -3,13 +3,12 @@
   z-index: 1;
   top: 0;
   width: 15rem;
-  height: 90vh;
+  height: 100vh;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   border-radius: 5px;
   padding: 20px;
-  margin-bottom: 20px;
 }
 
 .menu-items-noncollapsed {

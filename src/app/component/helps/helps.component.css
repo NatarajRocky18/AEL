@@ -1,7 +1,14 @@
 .help-container {
-    padding: 10px;
-    background-color: #f5f6fb;
-    height: 90vh;
+  background-color: #f5f6fb;
+  z-index: 1;
+  top: 0;
+  width: auto;
+  height: 100vh;
+  /* overflow-y: auto; */
+  /* display: flex; */
+  /* flex-direction: column; */
+  border-radius: 5px;
+  padding: 20px;
   }
   /* .right-sidebar[_ngcontent-ng-c3628421862] {
     width: 25%;

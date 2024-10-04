@@ -10,6 +10,7 @@
 					"I’m not, but my spouse is/was"
 				],
 				"name": "veteran",
+				"required": true,
 				"label":"Are you a veteran"
 			}
 		],
@@ -26,6 +27,7 @@
 					"More than 180 days"
 				],
 				"name": "veteran_experience",
+				"required": true,
 				"label":"How long did you serve on active duty in the U.S. military, naval, or air service"
 			}
 		],
@@ -42,6 +44,7 @@
 					"Yes"
 				],
 				"name": "veteran_release_condition",
+				"required": true,
 				"label":"Were you discharged or released under conditions other than dishonorable"
 			}
 		],
@@ -59,6 +62,7 @@
 					"Yes, with a disability rating of 30% or more"
 				],
 				"name": "veteran_service_connected_disability",
+				"required": true,
 				"label":"Do you have a service-connected disability"
 			}
 		],
@@ -71,6 +75,7 @@
 			{
 				"type": "datepicker",
 				"name": "date_of_birth",
+				"required": true,
 				"label":"date of separation"
 			}
 		],

@@ -10,6 +10,7 @@
 					"I prefer not to disclose"
 				],
 				"name": "disability",
+				"required": true,
 				"label":"Do you have a physical or mental disability as defined by the Americans with Disabilities Act (ADA), that substantially limits one or more major life activities"
 			}
 		],
@@ -26,6 +27,7 @@
 					"Yes"
 				],
 				"name": "disability_impact",
+				"required": true,
 				"label":"Would you like to provide further details about your disability or its impact on your participation"
 				
 			}
@@ -49,6 +51,7 @@
 					"I prefer not to disclose"
 				],
 				"name": "disability_describes",
+				"required": true,
 				"label":"best describes your disability"
 			}
 		],
