@@ -12,10 +12,11 @@ import { map } from 'rxjs/operators';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+// import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HelpsService } from '../../services/helps.service';
 import { F } from '@angular/cdk/keycodes';
 import { DataService } from '../../services/data.service';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-dynamic-question',
@@ -29,14 +30,12 @@ import { DataService } from '../../services/data.service';
     MatInputModule,
     MatSelectModule,
     MatIconModule,
-    MatDatepickerModule,
+    MatDatepickerModule, 
     MatNativeDateModule,
     MatButtonModule,
     CommonModule,
-    HttpClientModule, 
   ],
-  
-
+  providers: [DataService], 
   templateUrl: './dynamic-question.component.html',
   styleUrls: ['./dynamic-question.component.css']
 })
@@ -44,20 +43,20 @@ export class DynamicQuestionComponent implements OnInit {
 
   constructor(
     public formBuilder: FormBuilder, 
-    private http: HttpClient, 
     private helperServices: HelpsService,
-    private dataService: DataService
-  ) 
-    { }
+    private dataService: DataService,
+    private sharedService: SharedService
+  ) { }
 
-  apiUrl = 'http://localhost:3000/ael/add';
-  currentQuestionIndex = 0;
+   currentQuestionIndex = 0;
   @Input() item: any = '';
   options!: FormGroup;
   questions: any = [];
   profileSummary: { [key: string]: any } = {};
-  selectedRaces: string[] = [];
+  selectedCheckBox: string[] = [];
   profiledetails: any = []
+  receivedItem:any;
+  activeItem:string="";
 
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -69,14 +68,14 @@ export class DynamicQuestionComponent implements OnInit {
       }
     }
   }
-
-
+config:any={}
   loadInit(formName: string) {
-    this.http.get(`assets/json/${formName}.json`).subscribe(
+    this.dataService.getjosn(formName).subscribe(
       (response: any) => {
+        this.config=response
         this.currentQuestionIndex = 0
         this.options = new FormGroup({})
-        this.questions = response;
+        this.questions = response['questiones'];
         this.profiledetails = []
         this.questions.forEach((fieldarr: any) => {
           fieldarr.fields.forEach((field: any) => {
@@ -107,6 +106,14 @@ export class DynamicQuestionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
+    this.sharedService.item$.subscribe((item) => {
+      this.receivedItem = item; 
+      console.log('Received item from side_nav:', item);
+    this.loadInit(item)
+     
+    });
+
 
     this.options = this.formBuilder.group({
     });
@@ -116,7 +123,7 @@ export class DynamicQuestionComponent implements OnInit {
   configloaded = true
 
   get isFormValid(): boolean {
-    // return true;
+
     return this.options.valid;
 
   }
@@ -132,12 +139,15 @@ export class DynamicQuestionComponent implements OnInit {
     console.log("profiledetails" ,this.profiledetails);
     console.log("this.options.value" ,this.options.value);
     
-    this.http.post(this.apiUrl, this.options.value).subscribe((res: any) => {
+    // this.http.post(this.apiUrl, this.options.value)
+    this.dataService.addData(this.options.value).subscribe((res: any) => {
       console.log(res)
     });
   }
 
+
   nextQuestion(): void {
+
     this.saveFormData()
     
     const currentQuestion = this.questions[this.currentQuestionIndex];
@@ -147,8 +157,8 @@ export class DynamicQuestionComponent implements OnInit {
     const isCurrentQuestionValid = requiredFields.every((field: any) => {
       return this.options.get(field.name)?.valid;
     });
-    if (isCurrentQuestionValid) {
 
+    if (isCurrentQuestionValid) {
       this.currentQuestionIndex++;
       this.helperServices.setSidenavBehaviour(this.questions[this.currentQuestionIndex])
       let prevIndex = Number(this.currentQuestionIndex);
@@ -157,13 +167,11 @@ export class DynamicQuestionComponent implements OnInit {
         let currentSummaryvalue = this.profiledetails.find((res: any) => res.key === element.name);
 
         if (currentSummaryvalue) {
-          // Update the value if the element is found in profiledetails
           currentSummaryvalue['value'] = this.options.get(element.name)?.value || '';
 
           console.log("Question Name:", element.name);
           console.log("Question Details:", currentSummaryvalue);
         } else {
-          // If no match is found, log it or handle it accordingly
           console.warn(`No matching entry found for ${element.name} in profiledetails`);
         }
       });
@@ -188,6 +196,7 @@ export class DynamicQuestionComponent implements OnInit {
 
       optionsArray.push(...fieldsArray);
     });
+
     this.profileSummary = optionsArray;
   }
 
@@ -214,13 +223,13 @@ export class DynamicQuestionComponent implements OnInit {
       return 'Not provided';
     }
     if (key === 'race') {
-      return this.selectedRaces.join(', ') || 'None selected';
+      return this.selectedCheckBox.join(', ') || 'None selected';
     }
     if (key === 'disability_describes') {
-      return this.selectedRaces.join(', ') || 'None selected';
+      return this.selectedCheckBox.join(', ') || 'None selected';
     }
     if (key === 'work_phone_number') {
-      return this.selectedRaces.join(', ') || 'None selected';
+      return this.selectedCheckBox.join(', ') || 'None selected';
     }
     if (key === 'date_of_birth' && value) {
       return new Date(value).toLocaleDateString();
@@ -229,19 +238,29 @@ export class DynamicQuestionComponent implements OnInit {
     return value !== null && value !== undefined ? String(value) : 'Not provided1';
   }
 
-  updateSelectedRaces(option: string, isChecked: boolean) {
+  updateCheckBox(option: string, isChecked: boolean) {
     if (isChecked) {
-      this.selectedRaces.push(option);
+      this.selectedCheckBox.push(option);
     } else {
-      const index = this.selectedRaces.indexOf(option);
+      const index = this.selectedCheckBox.indexOf(option);
       if (index > -1) {
-        this.selectedRaces.splice(index, 1);
+        this.selectedCheckBox.splice(index, 1);
       }
     }
   }
 
   isLastQuestion(): boolean {
     return this.currentQuestionIndex === this.questions.length - 1;
+  }
+
+  confirm() {
+    
+    this.sharedService.emitItem(this.config['nextformName'])
+  }
+
+  cancel() {
+    
+    this.sharedService.emitItem(this.config['cancelForm'])
   }
 
 }

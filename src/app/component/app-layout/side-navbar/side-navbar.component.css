@@ -57,3 +57,12 @@
   font-weight: 500;
   color: #343a40; 
 }
+
+.mat-icon {
+  
+  overflow: visible !important;  
+}
+.active-item {
+  color: red;
+  font-weight: bold;
+}

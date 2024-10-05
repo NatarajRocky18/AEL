@@ -39,7 +39,7 @@
         <ng-container *ngIf="item.type === 'checkbox'">
             <div formArrayName="{{item.name}}">
                 <div *ngFor="let option of item.options; let i = index">
-                    <mat-checkbox [formControlName]="i" (change)="updateSelectedRaces(option, $event.checked)">
+                    <mat-checkbox [formControlName]="i" (change)="updateCheckBox(option, $event.checked)">
                         {{ option }}
                     </mat-checkbox>
                 </div>
@@ -79,8 +79,8 @@
                         <p>Do you with to submit your details ?</p>
                     </div>
                     <div class="next-button">
-                        <button mat-flat-button>Cancel</button> &nbsp;
-                        <button mat-flat-button>Confirm</button>
+                        <button mat-flat-button (click)="cancel() " >Cancel</button> &nbsp;
+                        <button mat-flat-button  (click)=" confirm()">Confirm</button>
                     </div>
 
                 </div>

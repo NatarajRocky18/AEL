@@ -7,11 +7,12 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 // import { validate } from 'uuid';
 // import { HelperService } from 'src/app/services/helper.service';
 // import { environment } from 'src/environments/environment';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { SharedService } from '../../../services/shared.service';
 interface SideNavToggle {
   screenwidth: number
   collapsed: boolean
@@ -19,34 +20,29 @@ interface SideNavToggle {
 @Component({
   selector: 'app-side-navbar',
   standalone:true,
-  imports:[MatMenuModule, MatIconModule,MatButtonModule,MatSidenavModule],
+  imports:[MatMenuModule, MatIconModule,MatButtonModule,MatSidenavModule,CommonModule],
   templateUrl: './side-navbar.component.html',
   styleUrls: ['./side-navbar.component.css']
 })
 export class SideNavbarComponent implements OnInit {
   @Input() parentData:String='';
   @Output() onToggleSidenav: EventEmitter<SideNavToggle> = new EventEmitter
-
-
   @Output() newItemEvent = new EventEmitter<string>();
-  
+  isDisabled = true;
   navItems!: any[]
   collapsed = true
   screenwidth = 0    
   subsectionExpanded: { [key: string]: boolean } = {};
   logo_image: any; 
-  project_Data:any=[] 
+  project_Data:any=[];
+  // activeItem:string="";
+
   constructor(
     private router: Router,
-    // private http:HttpClient,
-    // private dataservice: DataService,
-    // public dialogService: DialogService,
     private zone: NgZone,
-    // public helperServices:HelperService,
-  //  public dataservices:DataService,
-  ) {
-  }
-
+    private sharedService: SharedService
+  
+  ) {}
 
   toggleSubsection(section: any): void {
     for (let subsectionName in this.subsectionExpanded) { 
@@ -62,26 +58,13 @@ export class SideNavbarComponent implements OnInit {
       section.collapsed  = !section.expand
     }
   } 
-  // toggleSubsection(section: any): void {
-  //   for (let subsectionName in this.subsectionExpanded) {
-  //     if (subsectionName !== section.displayName) {
-  //       this.subsectionExpanded[subsectionName] = false;
-  //     }
-  //   }
-  //   if (section.children) {
-  //     this.subsectionExpanded[section.displayName] = !this.subsectionExpanded[section.displayName];
-  //   }
-  // }
-  
+
   screenId:any
   selectProject:any
   @Input('header') header: any
   routego:boolean = true;
   ngOnInit(): void {
-    // this.dataservice.getDataByFilter('project',{}).subscribe((res:any)=>{
-    //   console.log(res);
-    //   this.project_Data=res.data[0].response
-    // })
+
     if(this.header){
       this.navItems = this.header
       console.log(this.header);
@@ -91,19 +74,8 @@ export class SideNavbarComponent implements OnInit {
     }
 
     this.screenId ='ProjectMenu'
-    this.screenwidth = window.innerWidth
-    // this.http.get("src/assets/json/parthi.json")
-    // .subscribe((config:any)=>{
-    //   this.navItems = config
-    //   // this.selectProject=sessionStorage.getItem("selectedProjectID")
-    //   // console.log(this.selectProject);
-      
-    //   this.onToggleSidenav.emit({ collapsed: this.collapsed, screenwidth: this.screenwidth })
-    //   // this.logo_image = "../../../../assets/images/profilepics.jpeg";
-    //   // this.logo_image = environment.ImageBaseUrl+this.selectProject?.logo;
-    // });  
+    this.screenwidth = window.innerWidth  
   }
-
 
   @HostListener('window:ressize', ['$event'])
   onResize(event: any) {
@@ -128,23 +100,19 @@ export class SideNavbarComponent implements OnInit {
   }
   
   goToDashboard(item:any){
+    // this.sharedService.emitItem(item);
+    // this.activeItem= item;
     this.newItemEvent.emit(item);
     console.log("parent Form Name :" +item);
     
   }
- 
-
   
  close(){
   // this.helperServices.getProjectmenu(false)
  }
 
   logout() {
-    // if (confirm("Are you sure you want to Logout?")) {
-    //   sessionStorage.clear();
-    //   localStorage.clear();
-    //   this.router.navigate(['/login']);
-    // }
+
     this.zone.run(() => {
       if (confirm("Are you sure you want to Logout?")) {
         sessionStorage.clear();
@@ -157,15 +125,7 @@ export class SideNavbarComponent implements OnInit {
 routeToDestination(data:any){
 if(!this.routego) return ;
   let route=data.first+this.selectProject._id+data.last
-  // this._location.replaceState(route)
-  // this.route.params.subscribe(params=>{
-  //   console.warn(params);
-  // })
-  // let routes:any=this.router
-  // console.warn("this.router",routes.currentUrlTree.root);
-  // console.warn("this.route",this.route);
-  
-  // this.router.events.subscribe((event) => console.warn(event));
+
 
   this.router.navigate([route])  
 }  

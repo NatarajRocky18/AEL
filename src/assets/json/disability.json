@@ -1,4 +1,5 @@
-[
+{
+	"questiones":[
 	{
 		"question": "Do you have a physical or mental disability as defined by the Americans with Disabilities Act (ADA), that substantially limits one or more major life activities?",
 		"fields": [
@@ -68,4 +69,7 @@
 		"sectionHint": "This section is about your Personal Identifying Information.",
 		"questionHint": "Does everything look good so far? Feel free to make any corrections. Otherwise, click 'Confirm' to proceed or 'Previous' to go back."
 	}
-]
+],
+	"nextformName":"veteran",
+	"cancelForm":"disability"
+}

@@ -16,4 +16,6 @@ private $sidenav_toggle: BehaviorSubject<any> = new BehaviorSubject<any>(0);
   getSidenavBehaviour(): Observable<any> {
      return this.$sidenav_toggle.asObservable();
   }
+
+  
 }
