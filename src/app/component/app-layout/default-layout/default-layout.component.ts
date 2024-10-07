@@ -28,7 +28,8 @@ export class DefaultLayoutComponent {
   @Input() screenwidth = 0
 
   formName!: string
-  formHelp!:string
+
+  formHelp!: string
   sidenavedshow: boolean = false
   isSideNavCollapsed = false
 
@@ -51,7 +52,10 @@ export class DefaultLayoutComponent {
     this.formName = newItem
     this.formHelp = newItem
   }
-
+  status: any
+  sentStatus(event: any) {
+    this.status = event
+  }
   class() {
     let styleclass = ""
     if (this.collapsed && this.screenwidth > 768) {

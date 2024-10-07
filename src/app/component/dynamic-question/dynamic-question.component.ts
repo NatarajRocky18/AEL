@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, Validators, FormsModule, ReactiveFormsModule, FormArray, FormGroup } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -30,49 +30,57 @@ import { SharedService } from '../../services/shared.service';
     MatInputModule,
     MatSelectModule,
     MatIconModule,
-    MatDatepickerModule, 
+    MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
     CommonModule,
   ],
-  providers: [DataService], 
+  providers: [DataService],
   templateUrl: './dynamic-question.component.html',
   styleUrls: ['./dynamic-question.component.css']
 })
 export class DynamicQuestionComponent implements OnInit {
 
   constructor(
-    public formBuilder: FormBuilder, 
+    public formBuilder: FormBuilder,
     private helperServices: HelpsService,
     private dataService: DataService,
     private sharedService: SharedService
-  ) { }
+  ) {
+    this.loadInit(this.item)
+  }
 
-   currentQuestionIndex = 0;
+  currentQuestionIndex = 0;
   @Input() item: any = '';
+
+  @Output() SideNavStatus: EventEmitter<any> = new EventEmitter<any>();
+
   options!: FormGroup;
   questions: any = [];
   profileSummary: { [key: string]: any } = {};
   selectedCheckBox: string[] = [];
   profiledetails: any = []
-  receivedItem:any;
-  activeItem:string="";
+  activeItem: string = "";
+  // formName: string = ""; 
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes['item']) {
+  //     console.log("Child Form Name: " + this.item);
+  //     if (this.item != undefined) {
 
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['item']) {
-      console.log("Child Form Name: " + this.item);
-      if (this.item != undefined) {
-
-        this.loadInit(this.item)
-      }
-    }
-  }
-config:any={}
+  //       this.loadInit(this.item)
+  //     }
+  //   }
+  // }
+  config: any = {}
   loadInit(formName: string) {
+    console.log(this.item);
+
+    const formStatuses = this.getFormStatus();
+    this.SideNavStatus.emit(formStatuses)
+
     this.dataService.getjosn(formName).subscribe(
       (response: any) => {
-        this.config=response
+        this.config = response
         this.currentQuestionIndex = 0
         this.options = new FormGroup({})
         this.questions = response['questiones'];
@@ -106,18 +114,25 @@ config:any={}
   }
 
   ngOnInit(): void {
-    
-    this.sharedService.item$.subscribe((item) => {
-      this.receivedItem = item; 
-      console.log('Received item from side_nav:', item);
-    this.loadInit(item)
-     
-    });
 
+    // this.formName = "personal";
 
-    this.options = this.formBuilder.group({
+    this.sharedService.getemitItem().subscribe((val) => {
+
+      console.log('Received item from side_nav:', val);
+      if (val != undefined) {
+        this.item = val;
+
+        this.loadInit(this.item)
+      }
+
+      // this.loadInit(item)
+
     });
-    this.loadInit("personal")
+    this.options = this.formBuilder.group({});
+    // this.loadInit("personal");
+    this.patchFormFormStorage();
+
   }
 
   configloaded = true
@@ -134,22 +149,106 @@ config:any={}
     this.options.get(name)?.setValue(value)
   }
 
+  saveToLocalStorage(key: string, value: any): void {
+    localStorage.setItem(key, JSON.stringify(value))
+  }
+
+  getFromLocalStorage(key: string) {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : null
+  }
+
+
+  patchFormFormStorage(): void {
+    const savedData = this.getFromLocalStorage(this.item);
+    if (savedData) {
+
+      if (savedData.date_of_birth) {
+        savedData.date_of_birth = new Date(savedData.date_of_birth);
+      }
+      this.options.patchValue(savedData);
+    }
+
+  }
+
   saveFormData() {
-    console.log("profileSummary" ,this.profileSummary);
-    console.log("profiledetails" ,this.profiledetails);
-    console.log("this.options.value" ,this.options.value);
-    
-    // this.http.post(this.apiUrl, this.options.value)
-    this.dataService.addData(this.options.value).subscribe((res: any) => {
-      console.log(res)
+
+    console.log("profiledetails", this.profiledetails);
+
+    var date_of_birth = this.options.get('date_of_birth')?.value;
+
+    if (date_of_birth != null) {
+      const selectedDate = new Date(date_of_birth);
+      const utcDate = new Date(Date.UTC(
+        selectedDate.getFullYear(),
+        selectedDate.getMonth(),
+        selectedDate.getDate()
+      ));
+      const utcDateString = utcDate.toISOString().split('T')[0];
+      this.options.get('date_of_birth')?.setValue(utcDateString);
+    }
+
+    const dataToSend = Object.fromEntries(
+      Object.entries(this.options.value).filter(([key, value]) => value !== null && value !== '' && value !== undefined)
+    );
+
+    // localStorage.removeItem('formData');
+    this.saveToLocalStorage(this.item, dataToSend);
+
+    if (date_of_birth != null) {
+      this.dataService.addData("entities/student_entrollment", dataToSend).subscribe((res: any) => {
+        res.data.forEach((element: any) => {
+          Object.keys(element).forEach(key => {
+            let value = element[key];
+            const control = this.options.get(key);
+            if (control) {
+              control.setValue(value);
+            } else {
+              console.warn(`Form control for key "${key}" not found.`);
+            }
+          });
+        });
+
+        this.options.get('_id')?.setValue(res.inserted_id);
+        console.log('Inserted ID:', res.inserted_id);
+      });
+    }
+    const id = this.options.get('_id')?.value;
+    if (id) {
+      console.log('Retrieved ID:', id);
+    }
+  }
+
+  FormsList: string[] = [
+    "personal",
+    "disability",
+    "veteran",
+    "employment"
+  ]
+
+  completedForms: string[] = [];
+
+  getFormStatus() {
+    if (!this.completedForms.includes(this.item)) {
+      this.completedForms.push(this.item);
+    }
+    return this.FormsList.map(formName => {
+      return {
+        key: formName,
+        status: this.completedForms.includes(formName) ? 'pending' : 'pending',
+      };
     });
   }
 
 
+
   nextQuestion(): void {
 
+    const formStatuses = this.getFormStatus();
+    this.SideNavStatus.emit(formStatuses)
+
+
     this.saveFormData()
-    
     const currentQuestion = this.questions[this.currentQuestionIndex];
 
     const requiredFields = currentQuestion.fields.filter((field: any) => field.required);
@@ -252,15 +351,19 @@ config:any={}
   isLastQuestion(): boolean {
     return this.currentQuestionIndex === this.questions.length - 1;
   }
+  FormGroupNames: string[] = []
 
   confirm() {
-    
+
+    this.FormGroupNames
     this.sharedService.emitItem(this.config['nextformName'])
+
   }
 
   cancel() {
-    
+
     this.sharedService.emitItem(this.config['cancelForm'])
+
   }
 
 }

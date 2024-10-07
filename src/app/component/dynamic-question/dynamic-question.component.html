@@ -1,104 +1,107 @@
 @if (configloaded) {
-<div class="example-container">
-    <p>{{ questions[currentQuestionIndex]?.['question'] }}</p>
-    <form [formGroup]="options">
-        @for (items of questions; track $index;let i =$index) {
-        @if (i==currentQuestionIndex) {
-        @for (item of items['fields']; track $index;) {
-        <!-- <div class="example-form-fields"> -->
-        <ng-container *ngIf="item.type === 'input'">
-            <mat-form-field>
-                <input matInput [placeholder]="item?.placeholder" formControlName="{{item.name}}"
-                    [required]="item.required" />
-                    <mat-error *ngIf="options.get(item.name)?.hasError('required')&& options.get(item.name)?.touched">
-                        {{ item.label }} is required.
-                      </mat-error>  
-            </mat-form-field>
-        </ng-container>
-
-        <!-- Dynamic rendering for input type questions -->
-        <!-- <ng-container *ngIf="item.type === 'input'">
-                                <mat-form-field *ngFor="let field of item.fields">
-                                    <input matInput [placeholder]="field?.placeholder" formControlName="{{field.name}}"
-                                        [required]="field.required"/>
-                                </mat-form-field>
-                            </ng-container> -->
-
-        <!-- Dynamic rendering for radio button questions -->
-        <ng-container *ngIf="item.type === 'radio'">
-            <mat-radio-group [formControlName]="item.name" [id]="item.name">
-                <mat-radio-button *ngFor="let option of item.options" [value]="option"
-                    (change)="addvalue(item.name,option)">
-                    {{ option }}
-                </mat-radio-button>
-            </mat-radio-group>
-        </ng-container>
-
-        <!-- Dynamic rendering for checkbox questions -->
-
-        <ng-container *ngIf="item.type === 'checkbox'">
-            <div formArrayName="{{item.name}}">
-                <div *ngFor="let option of item.options; let i = index">
-                    <mat-checkbox [formControlName]="i" (change)="updateCheckBox(option, $event.checked)">
-                        {{ option }}
-                    </mat-checkbox>
+    <div class="example-container">
+        <p>{{ questions[currentQuestionIndex]?.['question'] }}</p>
+        <form [formGroup]="options">
+            @for (items of questions; track $index;let i =$index) {
+            @if (i==currentQuestionIndex) {
+            @for (item of items['fields']; track $index;) {
+            <!-- <div class="example-form-fields"> -->
+            <ng-container *ngIf="item.type === 'input'">
+                <mat-form-field>
+                    <mat-label>{{ item.label }}</mat-label>
+                    <input matInput [placeholder]="item?.placeholder" formControlName="{{item.name}}"
+                        [required]="item.required" />
+                        <mat-error *ngIf="options.get(item.name)?.hasError('required')&& options.get(item.name)?.touched">
+                            {{ item.label }} is required.
+                          </mat-error>  
+                </mat-form-field>
+            </ng-container>
+    
+            <!-- Dynamic rendering for input type questions -->
+            <!-- <ng-container *ngIf="item.type === 'input'">
+                                    <mat-form-field *ngFor="let field of item.fields">
+                                        <input matInput [placeholder]="field?.placeholder" formControlName="{{field.name}}"
+                                            [required]="field.required"/>
+                                    </mat-form-field>
+                                </ng-container> -->
+    
+            <!-- Dynamic rendering for radio button questions -->
+            <ng-container *ngIf="item.type === 'radio'">
+                <mat-radio-group [formControlName]="item.name" [id]="item.name" class="radio-group-vertical">
+                    <div *ngFor="let option of item.options" class="radio-option-container">
+                        <mat-radio-button [value]="option" (change)="addvalue(item.name, option)">
+                            {{ option }}
+                        </mat-radio-button>
+                    </div>
+                </mat-radio-group>
+            </ng-container>
+            
+    
+            <!-- Dynamic rendering for checkbox questions -->
+    
+            <ng-container *ngIf="item.type === 'checkbox'">
+                <div formArrayName="{{item.name}}">
+                    <div *ngFor="let option of item.options; let i = index">
+                        <mat-checkbox [formControlName]="i" (change)="updateCheckBox(option, $event.checked)">
+                            {{ option }}
+                        </mat-checkbox>
+                    </div>
                 </div>
-            </div>
-        </ng-container>
-
-
-        <!-- Dynamic rendering for date of birth questions -->
-        <ng-container *ngIf="item.type === 'datepicker'">
-            <mat-form-field>
-                <mat-label>Choose a date</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="date_of_birth">
-                <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-        </ng-container>
-
-        <!-- </div> -->
-
-        <!-- dynamic summary screen -->
-        <ng-container *ngIf="item.type === 'summary'">
-            <div class="summary-card">
-                <h2 class="summary-title"> Summary</h2>
-                <div class="key-value-container">
-                    <!-- <div *ngFor="let entry of profileSummary | keyvalue" class="key-value-entry">
-                          <span class="key">{{ entry.value.label | titlecase }}</span>
-                        <span class="value"> {{ formatValue(entry.value.key, entry.value.value) }}</span>
-                    </div> -->
-                    @for (item of profiledetails; track $index) {
-                        <div class="key-value-entry">
-                          <span class="key">{{ item.label | titlecase }}</span>
-                          <span class="value"> {{ formatValue(item.key, item.value) }}</span>
+            </ng-container>
+    
+    
+            <!-- Dynamic rendering for date of birth questions -->
+            <ng-container *ngIf="item.type === 'datepicker'">
+                <mat-form-field>
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="date_of_birth">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </ng-container>
+    
+            <!-- </div> -->
+    
+            <!-- dynamic summary screen -->
+            <ng-container *ngIf="item.type === 'summary'">
+                <div class="summary-card">
+                    <h2 class="summary-title"> Summary</h2>
+                    <div class="key-value-container">
+                        <!-- <div *ngFor="let entry of profileSummary | keyvalue" class="key-value-entry">
+                              <span class="key">{{ entry.value.label | titlecase }}</span>
+                            <span class="value"> {{ formatValue(entry.value.key, entry.value.value) }}</span>
+                        </div> -->
+                        @for (item of profiledetails; track $index) {
+                            <div class="key-value-entry">
+                              <span class="key">{{ item.label | titlecase }}</span>
+                              <span class="value"> {{ formatValue(item.key, item.value) }}</span>
+                            </div>
+                        }
+                        <div class="submit-details-heading">
+                            <p>Do you with to submit your details ?</p>
                         </div>
-                    }
-                    <div class="submit-details-heading">
-                        <p>Do you with to submit your details ?</p>
+                        <div class="next-button">
+                            <button mat-flat-button (click)="cancel() " >Cancel</button> &nbsp;
+                            <button mat-flat-button  (click)=" confirm()">Confirm</button>
+                        </div>
+    
                     </div>
-                    <div class="next-button">
-                        <button mat-flat-button (click)="cancel() " >Cancel</button> &nbsp;
-                        <button mat-flat-button  (click)=" confirm()">Confirm</button>
-                    </div>
-
                 </div>
+            </ng-container>
+    
+            }
+            }
+            }
+    
+            <div class="next-button">
+                <button class="previous-button" mat-button (click)="prevQuestion()"
+                    *ngIf="currentQuestionIndex > 0">Previous</button> &nbsp;
+                    <button class="next-buttons" mat-flat-button (click)="nextQuestion()" 
+                    [ngClass]="{'enabled-button':isCurrentQuestionValid(),'disabled-button':!isCurrentQuestionValid()}"
+                    [disabled]="!isCurrentQuestionValid()"
+                    *ngIf="!isLastQuestion()">Next</button>
             </div>
-        </ng-container>
-
-        }
-        }
-        }
-
-        <div class="next-button">
-            <button class="previous-button" mat-button (click)="prevQuestion()"
-                *ngIf="currentQuestionIndex > 0">Previous</button> &nbsp;
-                <button class="next-buttons" mat-flat-button (click)="nextQuestion()" 
-                [ngClass]="{'enabled-button':isCurrentQuestionValid(),'disabled-button':!isCurrentQuestionValid()}"
-                [disabled]="!isCurrentQuestionValid()"
-                *ngIf="!isLastQuestion()">Next</button>
-        </div>
-    </form>
-</div>
-}
+        </form>
+    </div>
+    }

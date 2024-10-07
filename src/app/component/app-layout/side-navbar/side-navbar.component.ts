@@ -1,5 +1,6 @@
+import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, EventEmitter, HostListener, Input, NgZone, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, HostListener, Input, NgZone, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 // import { DataService } from 'src/app/services/data.service';
 // import { DialogService } from 'src/app/services/dialog.service';
@@ -17,66 +18,77 @@ interface SideNavToggle {
   screenwidth: number
   collapsed: boolean
 }
+
 @Component({
   selector: 'app-side-navbar',
-  standalone:true,
-  imports:[MatMenuModule, MatIconModule,MatButtonModule,MatSidenavModule,CommonModule],
+  standalone: true,
+  imports: [MatMenuModule, MatIconModule, MatButtonModule, MatSidenavModule, CommonModule],
   templateUrl: './side-navbar.component.html',
   styleUrls: ['./side-navbar.component.css']
 })
 export class SideNavbarComponent implements OnInit {
-  @Input() parentData:String='';
+  activeItem: string = 'pending';
+
+  @Input() parentData: String = '';
+  @Input() sideNavStatus: any;
+
   @Output() onToggleSidenav: EventEmitter<SideNavToggle> = new EventEmitter
   @Output() newItemEvent = new EventEmitter<string>();
   isDisabled = true;
   navItems!: any[]
   collapsed = true
-  screenwidth = 0    
+  screenwidth = 0
   subsectionExpanded: { [key: string]: boolean } = {};
-  logo_image: any; 
-  project_Data:any=[];
+  logo_image: any;
+  project_Data: any = [];
   // activeItem:string="";
 
   constructor(
     private router: Router,
     private zone: NgZone,
     private sharedService: SharedService
-  
-  ) {}
+
+  ) {
+  }
 
   toggleSubsection(section: any): void {
-    for (let subsectionName in this.subsectionExpanded) { 
-      if (subsectionName !== section.displayName) { 
+    for (let subsectionName in this.subsectionExpanded) {
+      if (subsectionName !== section.displayName) {
         this.subsectionExpanded[subsectionName] = false;
       }
-    } 
-    if (section.children) { 
+    }
+    if (section.children) {
       this.subsectionExpanded[section.displayName] = !this.subsectionExpanded[section.displayName];
     }
-    if(section){
+    if (section) {
       section.expand = !section.expand
-      section.collapsed  = !section.expand
+      section.collapsed = !section.expand
     }
-  } 
+  }
 
-  screenId:any
-  selectProject:any
+  screenId: any
+  selectProject: any
   @Input('header') header: any
-  routego:boolean = true;
+  routego: boolean = true;
   ngOnInit(): void {
 
-    if(this.header){
+    if (this.header) {
       this.navItems = this.header
       console.log(this.header);
-      
-      this.routego =false
+
+      this.routego = false
       return
     }
 
-    this.screenId ='ProjectMenu'
-    this.screenwidth = window.innerWidth  
+    this.screenId = 'ProjectMenu'
+    this.screenwidth = window.innerWidth
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    console.log(this.sideNavStatus);
 
+  }
   @HostListener('window:ressize', ['$event'])
   onResize(event: any) {
     this.screenwidth = window.innerWidth;
@@ -98,18 +110,36 @@ export class SideNavbarComponent implements OnInit {
     this.collapsed = false
     this.onToggleSidenav.emit({ collapsed: this.collapsed, screenwidth: this.screenwidth })
   }
-  
-  goToDashboard(item:any){
-    // this.sharedService.emitItem(item);
+
+  selectedSection: string = '';
+
+  goToDashboard(item: any) {0
+    this.sharedService.emitItem(item);
     // this.activeItem= item;
-    this.newItemEvent.emit(item);
-    console.log("parent Form Name :" +item);
+    // this.newItemEvent.emit(item);
+    console.log("parent Form Name :" + item);
+    this.selectedSection = item;
     
+
   }
-  
- close(){
-  // this.helperServices.getProjectmenu(false)
- }
+
+  isDisabledLabel(key: string): boolean {
+    // this.sideNavStatus.map((s: any) => {
+    //   if (s.key === key) {
+
+    //   }
+    // }
+    
+    // )
+    // const status = this.sideNavStatus.find((s: any) => s.key === key);
+    // console.log(key);
+    // return status ? status.status !== 'completed' : true;
+    return true
+  }
+
+  close() {
+    // this.helperServices.getProjectmenu(false)
+  }
 
   logout() {
 
@@ -122,12 +152,12 @@ export class SideNavbarComponent implements OnInit {
     });
   }
 
-routeToDestination(data:any){
-if(!this.routego) return ;
-  let route=data.first+this.selectProject._id+data.last
+  routeToDestination(data: any) {
+    if (!this.routego) return;
+    let route = data.first + this.selectProject._id + data.last
 
 
-  this.router.navigate([route])  
-}  
+    this.router.navigate([route])
+  }
 
 }
