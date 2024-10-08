@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FormBuilder, FormControl, Validators, FormsModule, ReactiveFormsModule, FormArray, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormArray, FormGroup, FormControl } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FloatLabelType, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,9 +12,8 @@ import { map } from 'rxjs/operators';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
-// import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HelpsService } from '../../services/helps.service';
-import { F } from '@angular/cdk/keycodes';
+import { E, F } from '@angular/cdk/keycodes';
 import { DataService } from '../../services/data.service';
 import { SharedService } from '../../services/shared.service';
 
@@ -61,20 +60,11 @@ export class DynamicQuestionComponent implements OnInit {
   selectedCheckBox: string[] = [];
   profiledetails: any = []
   activeItem: string = "";
-  // formName: string = ""; 
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['item']) {
-  //     console.log("Child Form Name: " + this.item);
-  //     if (this.item != undefined) {
 
-  //       this.loadInit(this.item)
-  //     }
-  //   }
-  // }
   config: any = {}
+
   loadInit(formName: string) {
     console.log(this.item);
-
     const formStatuses = this.getFormStatus();
     this.SideNavStatus.emit(formStatuses)
 
@@ -105,6 +95,7 @@ export class DynamicQuestionComponent implements OnInit {
           })
         })
         this.helperServices.setSidenavBehaviour(this.questions[this.currentQuestionIndex])
+        this.loadInsertedId();
 
       },
       (error: any) => {
@@ -115,8 +106,6 @@ export class DynamicQuestionComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.formName = "personal";
-
     this.sharedService.getemitItem().subscribe((val) => {
 
       console.log('Received item from side_nav:', val);
@@ -126,13 +115,40 @@ export class DynamicQuestionComponent implements OnInit {
         this.loadInit(this.item)
       }
 
-      // this.loadInit(item)
-
     });
-    this.options = this.formBuilder.group({});
-    // this.loadInit("personal");
-    this.patchFormFormStorage();
 
+    this.options = this.formBuilder.group({
+    
+    });
+    
+
+  }
+   
+
+  loadInsertedId(){
+    const storedId = sessionStorage.getItem('inserted_id');
+    console.warn('Stored ID from session storage:', storedId);
+
+    if(storedId){
+
+      this.dataService.getDataById('student_entrollment',storedId).subscribe(
+         (response)=>{
+          this.options.patchValue(response.data);
+          console.log(this.options.value);
+          
+          console.log('Student Data:', response.data);
+         },
+          (error)=>{
+            console.error('Error fetching student data:', error);
+          }
+      )
+
+      // this.options.patchValue({});
+
+    }else{
+    console.error("No stored ID found in session storage.");
+    
+    }
   }
 
   configloaded = true
@@ -144,31 +160,8 @@ export class DynamicQuestionComponent implements OnInit {
   }
 
 
-
   addvalue(name: any, value: any) {
     this.options.get(name)?.setValue(value)
-  }
-
-  saveToLocalStorage(key: string, value: any): void {
-    localStorage.setItem(key, JSON.stringify(value))
-  }
-
-  getFromLocalStorage(key: string) {
-    const value = localStorage.getItem(key);
-    return value ? JSON.parse(value) : null
-  }
-
-
-  patchFormFormStorage(): void {
-    const savedData = this.getFromLocalStorage(this.item);
-    if (savedData) {
-
-      if (savedData.date_of_birth) {
-        savedData.date_of_birth = new Date(savedData.date_of_birth);
-      }
-      this.options.patchValue(savedData);
-    }
-
   }
 
   saveFormData() {
@@ -182,7 +175,8 @@ export class DynamicQuestionComponent implements OnInit {
       const utcDate = new Date(Date.UTC(
         selectedDate.getFullYear(),
         selectedDate.getMonth(),
-        selectedDate.getDate()
+        selectedDate.getDate(),
+
       ));
       const utcDateString = utcDate.toISOString().split('T')[0];
       this.options.get('date_of_birth')?.setValue(utcDateString);
@@ -192,11 +186,9 @@ export class DynamicQuestionComponent implements OnInit {
       Object.entries(this.options.value).filter(([key, value]) => value !== null && value !== '' && value !== undefined)
     );
 
-    // localStorage.removeItem('formData');
-    this.saveToLocalStorage(this.item, dataToSend);
-
     if (date_of_birth != null) {
       this.dataService.addData("entities/student_entrollment", dataToSend).subscribe((res: any) => {
+
         res.data.forEach((element: any) => {
           Object.keys(element).forEach(key => {
             let value = element[key];
@@ -209,13 +201,9 @@ export class DynamicQuestionComponent implements OnInit {
           });
         });
 
-        this.options.get('_id')?.setValue(res.inserted_id);
-        console.log('Inserted ID:', res.inserted_id);
+        sessionStorage.setItem("inserted_id",res.inserted_id)
+     
       });
-    }
-    const id = this.options.get('_id')?.value;
-    if (id) {
-      console.log('Retrieved ID:', id);
     }
   }
 
@@ -240,8 +228,6 @@ export class DynamicQuestionComponent implements OnInit {
     });
   }
 
-
-
   nextQuestion(): void {
 
     const formStatuses = this.getFormStatus();
@@ -249,6 +235,7 @@ export class DynamicQuestionComponent implements OnInit {
 
 
     this.saveFormData()
+    
     const currentQuestion = this.questions[this.currentQuestionIndex];
 
     const requiredFields = currentQuestion.fields.filter((field: any) => field.required);
@@ -279,7 +266,6 @@ export class DynamicQuestionComponent implements OnInit {
     } else {
 
     }
-
     const optionsArray: any = [];
     this.questions.forEach((questionData: any) => {
       const fieldsArray = questionData.fields.map((field: any) => {
@@ -354,16 +340,10 @@ export class DynamicQuestionComponent implements OnInit {
   FormGroupNames: string[] = []
 
   confirm() {
-
     this.FormGroupNames
     this.sharedService.emitItem(this.config['nextformName'])
-
   }
-
   cancel() {
-
     this.sharedService.emitItem(this.config['cancelForm'])
-
   }
-
 }

@@ -27,7 +27,7 @@
 				"placeholder": "Hours",
 				"name": "employment_work_hour",
 				"required": true,
-				"label":" hours per week do you work on average"
+				"label":" hours per week"
 
 			}
 		],

@@ -10,22 +10,20 @@
 }
 
 .center-content {
-  width: 50%; /* Center content takes 50% of the width */
-  padding: 10px; /* Padding for aesthetics */
+  width: 50%;
+  padding: 10px; 
 }
 
 .right-sidebar {
-  width: 25%; /* Right sidebar takes 25% of the width */
-  /* background-color: #f4f4f4;  */
-  /* padding: 10px;  */
+  width: 25%;
+  
 }
 
-/* Additional styles for your body */
 .body {
-  display: flex; /* Ensure body is also flexible */
-  flex-direction: column; /* Arrange children in a column */
-  height: 100vh; /* Full height */
-  margin-left: 15rem; /* Adjust for the width of the sidebar */
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin-left: 15rem;
   z-index: 0;
   position: relative;
   top: 0;
@@ -34,15 +32,15 @@
 }
 
 .body-trimmed {
-  margin-left: 20rem; /* Adjust for trimmed state */
+  margin-left: 20rem;
 }
 
 .body-md-screen {
-  width: 86%; /* Responsive adjustment for medium screens */
-  margin-left: 14rem; /* Adjust for width */
+  width: 86%;
+  margin-left: 14rem;
 }
 
 .default {
-  width: 100%; /* Default full width */
-  margin: 0; /* No margins */
+  width: 100%;
+  margin: 0; 
 }

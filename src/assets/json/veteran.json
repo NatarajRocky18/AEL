@@ -75,7 +75,7 @@
 		"fields": [
 			{
 				"type": "datepicker",
-				"name": "date_of_birth",
+				"name": "date_of_separation",
 				"required": true,
 				"label":"date of separation"
 			}
