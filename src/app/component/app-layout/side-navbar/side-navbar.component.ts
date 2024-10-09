@@ -79,7 +79,6 @@ export class SideNavbarComponent implements OnInit {
       this.routego = false
       return
     }
-
     this.screenId = 'ProjectMenu'
     this.screenwidth = window.innerWidth
   }
@@ -113,13 +112,15 @@ export class SideNavbarComponent implements OnInit {
 
   selectedSection: string = '';
 
-  goToDashboard(item: any) {0
+  goToDashboard(item: any) {
+    debugger
     this.sharedService.emitItem(item);
     // this.activeItem= item;
     // this.newItemEvent.emit(item);
     console.log("parent Form Name :" + item);
     this.selectedSection = item;
-    
+      
+    this.router.navigate(['enrollment', item]);
 
   }
 

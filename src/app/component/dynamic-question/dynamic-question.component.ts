@@ -16,6 +16,7 @@ import { HelpsService } from '../../services/helps.service';
 import { E, F } from '@angular/cdk/keycodes';
 import { DataService } from '../../services/data.service';
 import { SharedService } from '../../services/shared.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dynamic-question',
@@ -44,7 +45,9 @@ export class DynamicQuestionComponent implements OnInit {
     public formBuilder: FormBuilder,
     private helperServices: HelpsService,
     private dataService: DataService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.loadInit(this.item)
   }
@@ -63,7 +66,7 @@ export class DynamicQuestionComponent implements OnInit {
 
   config: any = {}
 
-  loadInit(formName: string) {
+  loadInit(formName: string){
     console.log(this.item);
     const formStatuses = this.getFormStatus();
     this.SideNavStatus.emit(formStatuses)
@@ -105,49 +108,44 @@ export class DynamicQuestionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    debugger
     this.sharedService.getemitItem().subscribe((val) => {
 
-      console.log('Received item from side_nav:', val);
+      console.warn('Received item from side_nav:', val);
       if (val != undefined) {
         this.item = val;
-
         this.loadInit(this.item)
       }
-
     });
 
     this.options = this.formBuilder.group({
-    
+
     });
-    
-
   }
-   
 
-  loadInsertedId(){
+  // return patch value forms fields
+  loadInsertedId() {
     const storedId = sessionStorage.getItem('inserted_id');
     console.warn('Stored ID from session storage:', storedId);
 
-    if(storedId){
-
-      this.dataService.getDataById('student_entrollment',storedId).subscribe(
-         (response)=>{
+    if (storedId) {
+      this.dataService.getDataById('entrollment', storedId).subscribe(
+        (response) => {
           this.options.patchValue(response.data);
           console.log(this.options.value);
-          
+
           console.log('Student Data:', response.data);
-         },
-          (error)=>{
-            console.error('Error fetching student data:', error);
-          }
+        },
+        (error) => {
+          console.error('Error fetching student data:', error);
+        }
       )
 
       // this.options.patchValue({});
 
-    }else{
-    console.error("No stored ID found in session storage.");
-    
+    } else {
+      console.error("No stored ID found in session storage.");
+
     }
   }
 
@@ -163,11 +161,9 @@ export class DynamicQuestionComponent implements OnInit {
   addvalue(name: any, value: any) {
     this.options.get(name)?.setValue(value)
   }
-
+  formId: any = null
   saveFormData() {
-
     console.log("profiledetails", this.profiledetails);
-
     var date_of_birth = this.options.get('date_of_birth')?.value;
 
     if (date_of_birth != null) {
@@ -186,7 +182,13 @@ export class DynamicQuestionComponent implements OnInit {
       Object.entries(this.options.value).filter(([key, value]) => value !== null && value !== '' && value !== undefined)
     );
 
-    if (date_of_birth != null) {
+    if (this.item == "disability" || this.item == "veteran" || this.item == "employment") {
+      this.formId = sessionStorage.getItem("inserted_id") ?? null
+
+    }
+
+    if (date_of_birth != null && this.formId == null) {
+
       this.dataService.addData("entities/student_entrollment", dataToSend).subscribe((res: any) => {
 
         res.data.forEach((element: any) => {
@@ -201,8 +203,23 @@ export class DynamicQuestionComponent implements OnInit {
           });
         });
 
-        sessionStorage.setItem("inserted_id",res.inserted_id)
-     
+        sessionStorage.setItem("inserted_id", res.inserted_id)
+        this.formId == res.inserted_id
+      });
+      return
+    }
+
+
+
+
+    if (this.formId) {
+
+      this.loadInsertedId()
+      const dataToSend1 = Object.fromEntries(
+        Object.entries(this.options.value).filter(([key, value]) => value !== null && value !== '' && value !== undefined)
+      );
+      this.dataService.updateData("entrollment", this.formId, dataToSend1).subscribe((res: any) => {
+        console.log(res);
       });
     }
   }
@@ -229,13 +246,13 @@ export class DynamicQuestionComponent implements OnInit {
   }
 
   nextQuestion(): void {
-
+    debugger
     const formStatuses = this.getFormStatus();
     this.SideNavStatus.emit(formStatuses)
 
 
     this.saveFormData()
-    
+
     const currentQuestion = this.questions[this.currentQuestionIndex];
 
     const requiredFields = currentQuestion.fields.filter((field: any) => field.required);
@@ -342,6 +359,7 @@ export class DynamicQuestionComponent implements OnInit {
   confirm() {
     this.FormGroupNames
     this.sharedService.emitItem(this.config['nextformName'])
+    this.router.navigate(['enrollment', this.config['nextformName']]);
   }
   cancel() {
     this.sharedService.emitItem(this.config['cancelForm'])
