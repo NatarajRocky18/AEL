@@ -28,8 +28,8 @@ export class DefaultLayoutComponent {
   @Input() screenwidth = 0
 
   formName!: string
-
   formHelp!: string
+
   sidenavedshow: boolean = false
   isSideNavCollapsed = false
 
@@ -53,6 +53,7 @@ export class DefaultLayoutComponent {
     this.formHelp = newItem
   }
   status: any
+  
   sentStatus(event: any) {
     this.status = event
   }

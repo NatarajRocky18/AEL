@@ -70,9 +70,21 @@
   color: red;
 }
 
+.sidenav-nav-item.disabled a {
+  pointer-events: none; /* Prevents clicking */
+  color: gray; /* Change the color to indicate disabled state */
+  opacity: 0.6; /* Slightly faded appearance */
+}
+
 
 .sidenav-nav-item.disabled {
   pointer-events: none; /* Prevents click events */
   opacity: 0.5; /* Makes the item look disabled */
   cursor: not-allowed; /* Changes the cursor to indicate it’s disabled */
+}
+
+.disabled {
+  pointer-events: none; /* Prevent clicks */
+  color: gray;          /* Change text color to indicate disabled */
+  opacity: 0.6;        /* Make it look faded */
 }

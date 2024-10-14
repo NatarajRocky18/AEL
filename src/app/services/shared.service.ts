@@ -18,6 +18,13 @@ export class SharedService {
   private itemSubject = new Subject<any>();
   item$ = this.itemSubject.asObservable();
 
+  private sidebarUpdateSource = new Subject<string>();
+  sidebarUpdate$ = this.sidebarUpdateSource.asObservable();
+
+  emitSidebarUpdate(section: string) {
+    this.sidebarUpdateSource.next(section);
+  }
+
   emitItem(item: any) {
     console.log("EMMITTED ITEM Are", item);
 

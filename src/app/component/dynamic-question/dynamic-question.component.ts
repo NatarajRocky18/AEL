@@ -161,6 +161,7 @@ export class DynamicQuestionComponent implements OnInit {
   addvalue(name: any, value: any) {
     this.options.get(name)?.setValue(value)
   }
+
   formId: any = null
   saveFormData() {
     console.log("profiledetails", this.profiledetails);
@@ -208,8 +209,6 @@ export class DynamicQuestionComponent implements OnInit {
       });
       return
     }
-
-
 
 
     if (this.formId) {
@@ -358,8 +357,9 @@ export class DynamicQuestionComponent implements OnInit {
 
   confirm() {
     this.FormGroupNames
-    this.sharedService.emitItem(this.config['nextformName'])
-    this.router.navigate(['enrollment', this.config['nextformName']]);
+    this.sharedService.emitItem(this.config['nextformName']);
+    this.sharedService.emitSidebarUpdate(this.config['nextformName']);
+    this.router.navigate(['enrollment', this.config['nextformName']]);    
   }
   cancel() {
     this.sharedService.emitItem(this.config['cancelForm'])
